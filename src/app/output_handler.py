@@ -1,5 +1,7 @@
 import json
+
 from app.logger import logger
+
 
 def send_to_output(data):
     """

@@ -1,14 +1,15 @@
-import unittest
-import sys
 import os
+import sys
+import unittest
 
 # Ensure `src` is in Python's import path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
 from app.processor import analyze
 
+
 class TestCandlestickPatterns(unittest.TestCase):
-    
+
     def test_valid_doji(self):
         """Test Doji candlestick pattern detection"""
         data = {
@@ -21,8 +22,8 @@ class TestCandlestickPatterns(unittest.TestCase):
                 "high": 151.0,
                 "low": 149.0,
                 "close": 150.0,
-                "volume": 1000000
-            }
+                "volume": 1000000,
+            },
         }
         result = analyze(data)
         self.assertEqual(result["candlestick_pattern"], "Doji")
@@ -39,8 +40,8 @@ class TestCandlestickPatterns(unittest.TestCase):
                 "high": 149.0,
                 "low": 145.0,
                 "close": 149.0,
-                "volume": 1000000
-            }
+                "volume": 1000000,
+            },
         }
         result = analyze(data)
         self.assertEqual(result["candlestick_pattern"], "Hammer")
@@ -57,17 +58,15 @@ class TestCandlestickPatterns(unittest.TestCase):
                 "high": 155.0,
                 "low": 151.0,
                 "close": 151.5,
-                "volume": 1000000
-            }
+                "volume": 1000000,
+            },
         }
         result = analyze(data)
         self.assertEqual(result["candlestick_pattern"], "Shooting Star")
 
     def test_valid_bullish_engulfing(self):
         """Test Bullish Engulfing pattern detection"""
-        prev_data = {
-            "open": 151.0, "high": 152.0, "low": 150.0, "close": 150.5
-        }
+        prev_data = {"open": 151.0, "high": 152.0, "low": 150.0, "close": 150.5}
         data = {
             "symbol": "AAPL",
             "timestamp": "2025-02-22T14:30:00Z",
@@ -78,8 +77,8 @@ class TestCandlestickPatterns(unittest.TestCase):
                 "high": 153.0,
                 "low": 149.5,
                 "close": 152.5,
-                "volume": 1000000
-            }
+                "volume": 1000000,
+            },
         }
         result = analyze(data, prev_data)
         self.assertEqual(result["candlestick_pattern"], "Bullish Engulfing")
@@ -90,7 +89,7 @@ class TestCandlestickPatterns(unittest.TestCase):
             "symbol": "AAPL",
             "timestamp": "2025-02-22T14:30:00Z",
             "price": 150.0,
-            "source": "YFinance"
+            "source": "YFinance",
             # Missing "data" field
         }
         result = analyze(data)
@@ -107,7 +106,7 @@ class TestCandlestickPatterns(unittest.TestCase):
                 "open": 150.0,
                 "high": 151.0,
                 # Missing "low" and "close"
-            }
+            },
         }
         result = analyze(data)
         self.assertIn("error", result)
@@ -126,8 +125,8 @@ class TestCandlestickPatterns(unittest.TestCase):
                 "high": 149.5,
                 "low": 139.0,
                 "close": 140.0,
-                "volume": 1200000
-            }
+                "volume": 1200000,
+            },
         }
         result = analyze(data, prev_data, prev_prev_data)
         self.assertEqual(result["candlestick_pattern"], "Evening Star")
@@ -146,11 +145,12 @@ class TestCandlestickPatterns(unittest.TestCase):
                 "high": 148.0,
                 "low": 143.0,
                 "close": 145.0,
-                "volume": 1200000
-            }
+                "volume": 1200000,
+            },
         }
         result = analyze(data, prev_data, prev_prev_data)
         self.assertEqual(result["candlestick_pattern"], "Three Black Crows")
+
 
 if __name__ == "__main__":
     unittest.main()

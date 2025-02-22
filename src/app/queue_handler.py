@@ -1,21 +1,30 @@
-import pika
-import os
 import json
-from app.processor import analyze
-from app.output_handler import send_to_output
+import os
+
+import pika
+
 from app.logger import logger
+from app.output_handler import send_to_output
+from app.processor import analyze
 
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
 RABBITMQ_EXCHANGE = os.getenv("RABBITMQ_EXCHANGE", "stock_analysis")
 RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE", "analysis_queue")
 RABBITMQ_ROUTING_KEY = os.getenv("RABBITMQ_ROUTING_KEY", "#")
 
+
 def consume_messages():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
     channel = connection.channel()
-    channel.exchange_declare(exchange=RABBITMQ_EXCHANGE, exchange_type='topic', durable=True)
+    channel.exchange_declare(
+        exchange=RABBITMQ_EXCHANGE, exchange_type="topic", durable=True
+    )
     channel.queue_declare(queue=RABBITMQ_QUEUE, durable=True)
-    channel.queue_bind(exchange=RABBITMQ_EXCHANGE, queue=RABBITMQ_QUEUE, routing_key=RABBITMQ_ROUTING_KEY)
+    channel.queue_bind(
+        exchange=RABBITMQ_EXCHANGE,
+        queue=RABBITMQ_QUEUE,
+        routing_key=RABBITMQ_ROUTING_KEY,
+    )
 
     def callback(ch, method, properties, body):
         try:

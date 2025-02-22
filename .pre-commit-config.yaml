@@ -1,20 +1,111 @@
 repos:
+  # ✅ Basic Code Hygiene (Trailing Whitespace, Newlines, YAML/JSON Checks)
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: "v5.0.0"
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-json
+      - id: detect-private-key
+
+  # ✅ Autoformatting (Black)
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: "25.1.0"
     hooks:
       - id: black
+
+  # ✅ Linting (Flake8)
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+    rev: "7.1.2"
     hooks:
       - id: flake8
+        additional_dependencies: ["flake8-bugbear", "flake8-import-order"]
+
+  # ✅ Type Checking (Mypy)
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.1.1
+    rev: "v1.15.0"
     hooks:
       - id: mypy
+
+  # ✅ Python Syntax Upgrades (PyUpgrade)
+  - repo: https://github.com/asottile/pyupgrade
+    rev: "v3.19.1"
+    hooks:
+      - id: pyupgrade
+        args: ["--py311-plus"]
+
+  # ✅ Import Sorting (Isort)
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: "v5.10.1"
+    hooks:
+      - id: isort
+        args: ["."]
+
+  # ✅ Security Checks for Python Code (Bandit)
+  - repo: https://github.com/PyCQA/bandit
+    rev: "1.8.3"
+    hooks:
+      - id: bandit
+        args: ["-r", "src"]
+
+  # ✅ Dependency Security Check (Safety)
+  # - repo: https://github.com/pyupio/safety
+  #   rev: "v2.3.5"
+  #   hooks:
+  #     - id: safety
+  #       args: ["--full-report"]
+
+  - repo: local
+    hooks:
+      - id: safety
+        name: safety
+        entry: safety check --full-report
+        language: system
+        types: [python]
+
+
+  # ✅ Dead Code & Unused Imports (Vulture)
+  - repo: https://github.com/jendrikseipp/vulture
+    rev: "v2.14"
+    hooks:
+      - id: vulture
+        args: ["src"]
+
+  # ✅ Dockerfile Linting (Hadolint)
+  - repo: https://github.com/hadolint/hadolint
+    rev: "v2.13.1-beta"
+    hooks:
+      - id: hadolint
+
+  # ✅ YAML Linting (Yamllint) - **Fixed Pre-Commit Mirror**
+  - repo: https://github.com/adrienverge/yamllint
+    rev: "v1.35.1"
+    hooks:
+      - id: yamllint
+
+  # ✅ Markdown Linting (Markdownlint) - **Fixed Pre-Commit Mirror**
+  - repo: local
+    hooks:
+      - id: markdownlint
+        name: markdownlint
+        entry: npx --no-install markdownlint-cli
+        language: system
+        files: \.md$
+        pass_filenames: true
+
+  # ✅ Shell Script Linter (ShellCheck) - **Fixed Pre-Commit Mirror**
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: "v0.10.0"
+    hooks:
+      - id: shellcheck
+
+
+  # ✅ Python Security Check (Pip-Audit) - **Fixed Pre-Commit Mirror**
+  - repo: local
+    hooks:
+      - id: pip-audit
+        name: pip-audit
+        entry: pip-audit
+        language: system
+        types: [python]
