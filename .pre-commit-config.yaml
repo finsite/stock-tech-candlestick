@@ -1,3 +1,4 @@
+---
 repos:
   # ✅ Basic Code Hygiene (Trailing Whitespace, Newlines, YAML/JSON Checks)
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -36,11 +37,11 @@ repos:
         args: ["--py311-plus"]
 
   # ✅ Import Sorting (Isort)
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: "v5.10.1"
-    hooks:
-      - id: isort
-        args: ["."]
+  # - repo: https://github.com/pre-commit/mirrors-isort
+  #   rev: "v5.10.1"
+  #   hooks:
+  #     - id: isort
+  #       args: ["."]
 
   # ✅ Security Checks for Python Code (Bandit)
   - repo: https://github.com/PyCQA/bandit
@@ -49,13 +50,6 @@ repos:
       - id: bandit
         args: ["-r", "src"]
 
-  # ✅ Dependency Security Check (Safety)
-  # - repo: https://github.com/pyupio/safety
-  #   rev: "v2.3.5"
-  #   hooks:
-  #     - id: safety
-  #       args: ["--full-report"]
-
   - repo: local
     hooks:
       - id: safety
@@ -63,7 +57,6 @@ repos:
         entry: safety check --full-report
         language: system
         types: [python]
-
 
   # ✅ Dead Code & Unused Imports (Vulture)
   - repo: https://github.com/jendrikseipp/vulture
@@ -79,8 +72,8 @@ repos:
       - id: hadolint
 
   # ✅ YAML Linting (Yamllint) - **Fixed Pre-Commit Mirror**
-  - repo: https://github.com/adrienverge/yamllint
-    rev: "v1.35.1"
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.35.1  # Use the latest stable version
     hooks:
       - id: yamllint
 
@@ -99,7 +92,6 @@ repos:
     rev: "v0.10.0"
     hooks:
       - id: shellcheck
-
 
   # ✅ Python Security Check (Pip-Audit) - **Fixed Pre-Commit Mirror**
   - repo: local

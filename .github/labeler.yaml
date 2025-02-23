@@ -1,4 +1,4 @@
-# Add 'root' label to any root file changes
+---
 root:
   - changed-files:
       - any-glob-to-any-file: '*'
