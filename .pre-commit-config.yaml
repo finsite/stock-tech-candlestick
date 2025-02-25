@@ -98,6 +98,27 @@ repos:
     hooks:
       - id: pip-audit
         name: pip-audit
-        entry: pip-audit
+        entry: pip-audit --requirement requirements.txt
         language: system
         types: [python]
+        pass_filenames: false  # Prevents passing non-requirements files
+
+  # ✅ Dependency Vulnerability Check (Safety)
+  - repo: local
+    hooks:
+      - id: safety
+        name: safety
+        entry: safety check --full-report --file=requirements.txt
+        language: system
+        types: [python]
+        pass_filenames: false  # 🚀 This prevents extra files from being passed!
+
+  # ✅ Sphinx Documentation Validation
+  - repo: local
+    hooks:
+      - id: sphinx-lint
+        name: Sphinx Docs Build
+        entry: sphinx-build -W -b html docs/source docs/build
+        language: system
+        pass_filenames: false
+        always_run: true

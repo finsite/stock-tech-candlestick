@@ -1,2 +1,34 @@
-sphinx==7.2.2          # For generating documentation
-sphinx-rtd-theme==3.0.2  # ReadTheDocs theme for Sphinx
+# Core dependencies
+pandas
+numpy
+scipy
+matplotlib
+pika  # For RabbitMQ integration
+boto3  # If using SQS
+
+# Logging & Config
+loguru
+python-dotenv  # For environment variable management
+
+# Documentation (Sphinx + ReadTheDocs Theme + Markdown Support)
+sphinx
+sphinx-rtd-theme
+myst-parser  # Enables Markdown (.md) support
+sphinx-autodoc-typehints  # Automatically include type hints in docs
+
+# Code Quality (Pre-commit Hooks)
+pre-commit
+black  # Auto-formatting
+flake8  # Linter
+mypy  # Type checker
+isort  # Import sorting
+bandit  # Security linter
+vulture  # Detects unused code
+safety  # Checks for vulnerabilities in dependencies
+pip-audit  # Security audit for installed dependencies
+
+# Testing
+pytest
+pytest-mock
+pytest-cov  # Test coverage reporting
+tox  # Multi-environment testing
