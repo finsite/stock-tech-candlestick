@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "stock-tech-candlestick"
-version = "0.1.0"
+version = "0.1.1"
 description = "A technical analysis module for candlestick pattern detection."
 authors = ["Your Name <your.email@example.com>"]
 license = "MIT"
