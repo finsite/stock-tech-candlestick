@@ -10,25 +10,3 @@ boto3  # If using SQS
 loguru
 python-dotenv  # For environment variable management
 
-# Documentation (Sphinx + ReadTheDocs Theme + Markdown Support)
-sphinx
-sphinx-rtd-theme
-myst-parser  # Enables Markdown (.md) support
-sphinx-autodoc-typehints  # Automatically include type hints in docs
-
-# Code Quality (Pre-commit Hooks)
-pre-commit
-black  # Auto-formatting
-flake8  # Linter
-mypy  # Type checker
-isort  # Import sorting
-bandit  # Security linter
-vulture  # Detects unused code
-safety  # Checks for vulnerabilities in dependencies
-pip-audit  # Security audit for installed dependencies
-
-# Testing
-pytest
-pytest-mock
-pytest-cov  # Test coverage reporting
-tox  # Multi-environment testing

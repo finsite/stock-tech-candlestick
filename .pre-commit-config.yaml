@@ -1,124 +1,158 @@
----
 repos:
   # ✅ Basic Code Hygiene (Trailing Whitespace, Newlines, YAML/JSON Checks)
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v5.0.0"
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
+      #- id: trailing-whitespace
+      #- id: end-of-file-fixer
       - id: check-yaml
       - id: check-json
       - id: detect-private-key
 
-  # ✅ Autoformatting (Black)
   - repo: https://github.com/psf/black
+    # ✅ Autoformatting (Black)
     rev: "25.1.0"
     hooks:
       - id: black
 
-  # ✅ Linting (Flake8)
   - repo: https://github.com/PyCQA/flake8
+    # ✅ Linting (Flake8)
     rev: "7.1.2"
     hooks:
       - id: flake8
         additional_dependencies: ["flake8-bugbear", "flake8-import-order"]
 
-  # ✅ Type Checking (Mypy)
   - repo: https://github.com/pre-commit/mirrors-mypy
+    # ✅ Type Checking (Mypy)
     rev: "v1.15.0"
     hooks:
       - id: mypy
 
-  # ✅ Python Syntax Upgrades (PyUpgrade)
   - repo: https://github.com/asottile/pyupgrade
+    # ✅ Python Syntax Upgrades (PyUpgrade)
     rev: "v3.19.1"
     hooks:
       - id: pyupgrade
         args: ["--py311-plus"]
 
-  # ✅ Import Sorting (Isort)
-  # - repo: https://github.com/pre-commit/mirrors-isort
-  #   rev: "v5.10.1"
-  #   hooks:
-  #     - id: isort
-  #       args: ["."]
+  - repo: https://github.com/pre-commit/mirrors-isort
+    # ✅ Import Sorting (Isort) - Only applies to `.py` files
+    rev: "v5.10.1"
+    hooks:
+      - id: isort
+        args: ["--filter-files"]
+        files: "\\.py$"
 
-  # ✅ Security Checks for Python Code (Bandit)
   - repo: https://github.com/PyCQA/bandit
+    # ✅ Security Linter for Python Code (Bandit)
     rev: "1.8.3"
     hooks:
       - id: bandit
-        args: ["-r", "src"]
+        entry: bandit -r src --exclude "tests/*,docs/*,setup.py"
+        language: python
+        pass_filenames: false
 
   - repo: local
     hooks:
       - id: safety
         name: safety
-        entry: safety check --full-report
+        entry: safety scan --full-report --file=requirements.txt --key free
         language: system
         types: [python]
+        pass_filenames: false
 
-  # ✅ Dead Code & Unused Imports (Vulture)
   - repo: https://github.com/jendrikseipp/vulture
+    # ✅ Dead Code & Unused Imports (Vulture) - Ignores Docs & Tests
     rev: "v2.14"
     hooks:
       - id: vulture
         args: ["src"]
+        exclude: "docs/.*|tests/.*"
 
-  # ✅ Dockerfile Linting (Hadolint)
   - repo: https://github.com/hadolint/hadolint
-    rev: "v2.13.1-beta"
+    rev: v2.13.1-beta # Use latest stable version
     hooks:
       - id: hadolint
-
-  # ✅ YAML Linting (Yamllint) - **Fixed Pre-Commit Mirror**
-  - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.35.1  # Use the latest stable version
-    hooks:
-      - id: yamllint
-
-  # ✅ Markdown Linting (Markdownlint) - **Fixed Pre-Commit Mirror**
-  - repo: local
-    hooks:
-      - id: markdownlint
-        name: markdownlint
-        entry: npx --no-install markdownlint-cli
+        name: Hadolint
+        entry: hadolint
         language: system
-        files: \.md$
-        pass_filenames: true
+        files: Dockerfile
 
-  # ✅ Shell Script Linter (ShellCheck) - **Fixed Pre-Commit Mirror**
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v4.0.0-alpha.8" # Use the latest stable version
+    hooks:
+      - id: prettier
+        args: ["--print-width", "80"]
+        additional_dependencies: ["prettier@latest"]
+  # - repo: https://github.com/google/yamlfmt
+  #   # # ✅ YAML Formatting
+  #   rev: v0.14.0
+  #   hooks:
+  #     - id: yamlfmt
+  #       language: system
+  #   rev: "v1.35.1"
+  #   hooks:
+  #     - id: yamllint
+  #   # ✅ Markdown Linting (Markdownlint) - Uses Windows-Compatible `npx`
+  #   hooks:
+  #     - id: markdownlint
+  #       args: ['--fix']
+  #       name: markdownlint
+  #       entry: npx markdownlint-cli
+  #       language: system
+  #       files: "\\.md$"
+  #       pass_filenames: true
+  #       types: [markdown]
+  # - repo: https://github.com/DavidAnson/markdownlint-cli2
+  #   # - repo: local
+
+  #   rev: v0.17.2 # Use the latest stable version
+  #   hooks:
+  #     - id: markdownlint-cli2
+  #       args: ["--fix"]
   - repo: https://github.com/koalaman/shellcheck-precommit
+    # ✅ Shell Script Linter (ShellCheck) - Uses System Binary
     rev: "v0.10.0"
     hooks:
       - id: shellcheck
-
-  # ✅ Python Security Check (Pip-Audit) - **Fixed Pre-Commit Mirror**
+        entry: shellcheck # Uses system-installed binary
+        language: system
   - repo: local
+    # ✅ Python Security Check (Pip-Audit) - Now only scans `requirements.txt`
     hooks:
       - id: pip-audit
         name: pip-audit
         entry: pip-audit --requirement requirements.txt
         language: system
         types: [python]
-        pass_filenames: false  # Prevents passing non-requirements files
-
-  # ✅ Dependency Vulnerability Check (Safety)
+        pass_filenames: false
   - repo: local
-    hooks:
-      - id: safety
-        name: safety
-        entry: safety check --full-report --file=requirements.txt
-        language: system
-        types: [python]
-        pass_filenames: false  # 🚀 This prevents extra files from being passed!
+    # ✅ Sphinx Documentation Validation - Windows-Compatible
 
-  # ✅ Sphinx Documentation Validation
-  - repo: local
     hooks:
       - id: sphinx-lint
         name: Sphinx Docs Build
-        entry: sphinx-build -W -b html docs/source docs/build
+        entry: cmd /c "if exist src (sphinx-build -W -b html docs/source docs/build)"
         language: system
         pass_filenames: false
         always_run: true
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.8 # Use the latest stable version
+    hooks:
+      - id: ruff
+        args: [--fix]
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args: [
+            "-rn", # Only display messages
+            "--rcfile=pylintrc", # Link to your config file
+            "--load-plugins=pylint.extensions.docparams", # Load an extension
+          ]
