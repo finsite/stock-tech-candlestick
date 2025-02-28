@@ -1,12 +1,15 @@
 import logging
-from typing import Optional, Dict
 
 # Setup logger
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-def analyze(data: Dict[str, any], prev_data: Optional[Dict[str, any]] = None, prev_prev_data: Optional[Dict[str, any]] = None) -> Dict[str, any]:
+def analyze(
+    data: dict[str, any],
+    prev_data: dict[str, any] | None = None,
+    prev_prev_data: dict[str, any] | None = None,
+) -> dict[str, any]:
     """
     Detects candlestick patterns from stock price data.
     Logs detected patterns.
@@ -61,9 +64,12 @@ def analyze(data: Dict[str, any], prev_data: Optional[Dict[str, any]] = None, pr
 
 
 def detect_candlestick_pattern(
-    open_price: float, high_price: float, low_price: float, close_price: float,
-    prev_data: Optional[Dict[str, float]] = None,
-    prev_prev_data: Optional[Dict[str, float]] = None
+    open_price: float,
+    high_price: float,
+    low_price: float,
+    close_price: float,
+    prev_data: dict[str, float] | None = None,
+    prev_prev_data: dict[str, float] | None = None,
 ) -> str:
     """
     Determines the type of candlestick pattern based on price movements.

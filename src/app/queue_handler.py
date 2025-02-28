@@ -1,8 +1,9 @@
 import json
 import os
 import time
-import pika
+
 import boto3
+import pika
 from botocore.exceptions import BotoCoreError, NoCredentialsError
 
 from app.logger import logger
@@ -38,7 +39,9 @@ def connect_to_rabbitmq():
     retries = 5
     while retries > 0:
         try:
-            connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
+            connection = pika.BlockingConnection(
+                pika.ConnectionParameters(host=RABBITMQ_HOST)
+            )
             logger.info("Connected to RabbitMQ")
             return connection
         except pika.exceptions.AMQPConnectionError as e:
@@ -53,11 +56,17 @@ def consume_rabbitmq():
     """Consumes messages from RabbitMQ, processes them, and sends output."""
     connection = connect_to_rabbitmq()
     channel = connection.channel()
-    
+
     # Declare exchange, queue, and binding
-    channel.exchange_declare(exchange=RABBITMQ_EXCHANGE, exchange_type="topic", durable=True)
+    channel.exchange_declare(
+        exchange=RABBITMQ_EXCHANGE, exchange_type="topic", durable=True
+    )
     channel.queue_declare(queue=RABBITMQ_QUEUE, durable=True)
-    channel.queue_bind(exchange=RABBITMQ_EXCHANGE, queue=RABBITMQ_QUEUE, routing_key=RABBITMQ_ROUTING_KEY)
+    channel.queue_bind(
+        exchange=RABBITMQ_EXCHANGE,
+        queue=RABBITMQ_QUEUE,
+        routing_key=RABBITMQ_ROUTING_KEY,
+    )
 
     def callback(ch, method, properties, body):
         """Processes received messages and acknowledges them."""
@@ -71,10 +80,14 @@ def consume_rabbitmq():
             ch.basic_ack(delivery_tag=method.delivery_tag)  # Acknowledge message
         except json.JSONDecodeError:
             logger.error("Invalid JSON format: %s", body)
-            ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)  # Do not retry
+            ch.basic_nack(
+                delivery_tag=method.delivery_tag, requeue=False
+            )  # Do not retry
         except Exception as e:
             logger.error("Error processing message: %s", e)
-            ch.basic_nack(delivery_tag=method.delivery_tag, requeue=True)  # Retry message
+            ch.basic_nack(
+                delivery_tag=method.delivery_tag, requeue=True
+            )  # Retry message
 
     # Set up consumer
     channel.basic_consume(queue=RABBITMQ_QUEUE, on_message_callback=callback)
@@ -118,11 +131,15 @@ def consume_sqs():
                     send_to_output(result)  # Send processed data
 
                     # Delete message after successful processing
-                    sqs_client.delete_message(QueueUrl=SQS_QUEUE_URL, ReceiptHandle=message["ReceiptHandle"])
+                    sqs_client.delete_message(
+                        QueueUrl=SQS_QUEUE_URL, ReceiptHandle=message["ReceiptHandle"]
+                    )
                     logger.info("Deleted SQS message: %s", message["MessageId"])
 
                 except json.JSONDecodeError:
-                    logger.error("Invalid JSON format in SQS message: %s", message["Body"])
+                    logger.error(
+                        "Invalid JSON format in SQS message: %s", message["Body"]
+                    )
                 except Exception as e:
                     logger.error("Error processing SQS message: %s", e)
 
