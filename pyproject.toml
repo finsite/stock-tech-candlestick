@@ -1,22 +1,22 @@
+[tool.poetry]
+name = "stock-tech-candlestick"
+version = "0.1.0"
+description = "A technical analysis module for candlestick pattern detection."
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+readme = "README.md"
+
 [tool.bump-my-version]
 current_version = "0.1.0"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
 serialize = ["{major}.{minor}.{patch}"]
 
-# Enable Git tagging & commits
 commit = true
 message = "Bump version: {current_version} → {new_version}"
-commit_args = ""
 tag = true
 tag_name = "v{new_version}"
 tag_message = "Version {new_version}"
 
-# Hook support (optional)
-setup_hooks = []
-pre_commit_hooks = []
-post_commit_hooks = []
-
-# File-specific versioning
 [[tool.bump-my-version.files]]
 filename = "pyproject.toml"
 search = 'version = "{current_version}"'
@@ -26,3 +26,7 @@ replace = 'version = "{new_version}"'
 filename = "src/app/__init__.py"
 search = '__version__ = "{current_version}"'
 replace = '__version__ = "{new_version}"'
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
