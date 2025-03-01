@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-tech-candlestick
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-tech-candlestick
+  template:
+    metadata:
+      labels:
+        app: stock-tech-candlestick
+    spec:
+      containers:
+        - name: stock-tech-candlestick
+          image: your-registry/stock-tech-candlestick:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: ENVIRONMENT
+              value: "development"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: RABBITMQ_HOST
+              value: "rabbitmq.dev.internal"
+            - name: RABBITMQ_QUEUE
+              value: "candlestick_dev_queue"
+

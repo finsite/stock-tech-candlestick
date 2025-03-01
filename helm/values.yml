@@ -1,0 +1,17 @@
+replicaCount: 3
+
+image:
+  repository: your-registry/stock-tech-candlestick
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8000
+
+environment:
+  ENVIRONMENT: "production"
+  LOG_LEVEL: "info"
+  RABBITMQ_HOST: "rabbitmq.prod.internal"
+  RABBITMQ_QUEUE: "candlestick_prod_queue"
