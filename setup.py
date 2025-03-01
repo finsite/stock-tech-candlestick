@@ -14,7 +14,13 @@ setup(
         "numpy>=1.21.0",
     ],
     extras_require={
-        "dev": ["pytest>=7.0", "pytest-cov>=4.0", "flake8>=4.0", "black>=22.0", "mypy>=1.0"],
+        "dev": [
+            "pytest>=7.0",
+            "pytest-cov>=4.0",
+            "flake8>=4.0",
+            "black>=22.0",
+            "mypy>=1.0",
+        ],
         "docs": ["sphinx>=4.0", "sphinx-rtd-theme>=1.0"],
         "test": ["pytest>=7.0", "pytest-cov>=4.0"],
     },

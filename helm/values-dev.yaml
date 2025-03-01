@@ -5,4 +5,3 @@ environment:
   LOG_LEVEL: "debug"
   RABBITMQ_HOST: "rabbitmq.dev.internal"
   RABBITMQ_QUEUE: "candlestick_dev_queue"
-

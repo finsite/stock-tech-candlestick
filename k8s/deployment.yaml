@@ -26,4 +26,3 @@ spec:
               value: "rabbitmq.dev.internal"
             - name: RABBITMQ_QUEUE
               value: "candlestick_dev_queue"
-
