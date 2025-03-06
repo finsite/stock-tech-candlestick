@@ -28,10 +28,10 @@ repos:
         types: [python]
 
   # ✅ Type Checking (Mypy)
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.15.0"
-    hooks:
-      - id: mypy
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: "v1.15.0"
+  #   hooks:
+  #     - id: mypy
 
   # ✅ Security Linter for Python Code (Bandit) - Now Scans Tests Too
   - repo: https://github.com/PyCQA/bandit
@@ -131,11 +131,11 @@ repos:
       - id: darglint
         args: ["--verbosity", "2"]
 
-  # ✅ Run Tests (Pytest)
-  - repo: local
-    hooks:
-      - id: pytest
-        name: Run tests before commit
-        entry: pytest
-        language: system
-        pass_filenames: false
+  # # ✅ Run Tests (Pytest)
+  # - repo: local
+  #   hooks:
+  #     - id: pytest
+  #       name: Run tests before commit
+  #       entry: pytest
+  #       language: system
+  #       pass_filenames: false

@@ -181,10 +181,14 @@ logging.basicConfig(level=logging.INFO)
 
 
 def analyze(
-    data: dict[str, any],
-    prev_data: dict[str, any] | None = None,
-    prev_prev_data: dict[str, any] | None = None,
-) -> dict[str, any]:
+    data: dict[str, any],  # The current stock data containing OHLC values.
+    prev_data: dict[str, any] | None = None,  # Previous stock data. Defaults to None.
+    prev_prev_data: (
+        dict[str, any] | None
+    ) = None,  # Two-periods-ago stock data. Defaults to None.
+) -> dict[
+    str, any
+]:  # Returns a dictionary containing the detected pattern, original data, and metadata.
     """
     Detects candlestick patterns from stock price data and logs detected patterns.
 
@@ -198,10 +202,10 @@ def analyze(
     """
     try:
         ohlc_data = data["data"]  # Extract OHLC values
-        open_price = ohlc_data["open"]
-        high_price = ohlc_data["high"]
-        low_price = ohlc_data["low"]
-        close_price = ohlc_data["close"]
+        open_price: float = ohlc_data["open"]
+        high_price: float = ohlc_data["high"]
+        low_price: float = ohlc_data["low"]
+        close_price: float = ohlc_data["close"]
     except KeyError:
         logger.error("Invalid data format: %s", data)
         return {
@@ -213,7 +217,7 @@ def analyze(
         prev_prev_data["data"] if prev_prev_data and "data" in prev_prev_data else None
     )
 
-    pattern = detect_candlestick_pattern(
+    pattern: str = detect_candlestick_pattern(
         open_price, high_price, low_price, close_price, prev_data, prev_prev_data
     )
 
@@ -232,26 +236,26 @@ def analyze(
 
 
 def detect_candlestick_pattern(
-    open_price: float,
-    high_price: float,
-    low_price: float,
-    close_price: float,
-    prev_data: dict[str, float] | None = None,
-    prev_prev_data: dict[str, float] | None = None,
-) -> str:
+    open_price: float,  # Opening price of the current period
+    high_price: float,  # Highest price of the current period
+    low_price: float,  # Lowest price of the current period
+    close_price: float,  # Closing price of the current period
+    prev_data: dict[str, float] | None = None,  # Previous period data
+    prev_prev_data: dict[str, float] | None = None,  # Two-periods-ago data
+) -> str:  # Returns the name of the detected candlestick pattern
     """
     Determines the type of candlestick pattern based on price movements.
 
     Args:
-        open_price (float): The opening price.
-        high_price (float): The highest price.
-        low_price (float): The lowest price.
-        close_price (float): The closing price.
+        open_price (float): The opening price of the current period.
+        high_price (float): The highest price of the current period.
+        low_price (float): The lowest price of the current period.
+        close_price (float): The closing price of the current period.
         prev_data (dict[str, float] | None, optional): Previous period data. Defaults to None.
         prev_prev_data (dict[str, float] | None, optional): Two-periods-ago data. Defaults to None.
 
     Returns:
-        str: The detected candlestick pattern name.
+        str: The name of the detected candlestick pattern.
     """
     body_size = abs(close_price - open_price)
     upper_shadow = high_price - max(open_price, close_price)
@@ -343,20 +347,26 @@ def detect_candlestick_pattern(
 
 
 def detect_three_black_crows(
-    prev_prev_data: dict[str, float],
-    prev_data: dict[str, float],
-    current_data: dict[str, float],
-) -> bool:
+    prev_prev_data: dict[
+        str, float
+    ],  # Data from two periods ago, with keys "open" and "close"
+    prev_data: dict[
+        str, float
+    ],  # Data from one period ago, with keys "open" and "close"
+    current_data: dict[
+        str, float
+    ],  # Data from the current period, with keys "open" and "close"
+) -> bool:  # True if the Three Black Crows pattern is detected, otherwise False
     """
     Detects the Three Black Crows candlestick pattern.
 
     Args:
-        prev_prev_data (dict[str, float]): Data from two periods ago.
-        prev_data (dict[str, float]): Data from one period ago.
-        current_data (dict[str, float]): Data from the current period.
+        prev_prev_data (dict[str, float]): Data from two periods ago, with keys "open" and "close"
+        prev_data (dict[str, float]): Data from one period ago, with keys "open" and "close"
+        current_data (dict[str, float]): Data from the current period, with keys "open" and "close"
 
     Returns:
-        bool: True if the pattern is detected, otherwise False.
+        bool: True if the Three Black Crows pattern is detected, otherwise False
     """
     p1_open, p1_close = prev_prev_data["open"], prev_prev_data["close"]
     p2_open, p2_close = prev_data["open"], prev_data["close"]
