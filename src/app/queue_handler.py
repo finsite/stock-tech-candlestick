@@ -35,7 +35,13 @@ if QUEUE_TYPE == "sqs":
 
 
 def connect_to_rabbitmq():
-    """Creates and returns a RabbitMQ connection with retries."""
+    """
+    Creates and returns a RabbitMQ connection with retries.
+
+    Establishes a connection to RabbitMQ and returns the connection object.
+    If the connection fails, it will retry up to 5 times with 5 seconds between retries.
+    If all retries fail, it will raise a ConnectionError.
+    """
     retries = 5
     while retries > 0:
         try:
@@ -46,14 +52,26 @@ def connect_to_rabbitmq():
             return connection
         except pika.exceptions.AMQPConnectionError as e:
             retries -= 1
-            logger.warning("Failed to connect to RabbitMQ (%s), retrying in 5s...", e)
+            logger.warning(
+                "Failed to connect to RabbitMQ (%s), retrying in 5s...",
+                e,
+            )
             time.sleep(5)
     logger.error("Could not connect to RabbitMQ after multiple attempts")
     raise ConnectionError("RabbitMQ connection failed")
 
 
 def consume_rabbitmq():
-    """Consumes messages from RabbitMQ, processes them, and sends output."""
+    """Consumes messages from RabbitMQ, processes them, and sends output.
+
+    Establishes a connection to RabbitMQ, declares an exchange, queue, and binding,
+    and starts consuming messages. The messages are processed by the `analyze`
+    function and the resulting data is sent to the output handler.
+
+    If an error occurs while processing a message, it will be logged and either
+    requeued (if the error is transient) or discarded (if the error is due to
+    invalid input).
+    """
     connection = connect_to_rabbitmq()
     channel = connection.channel()
 
@@ -69,7 +87,14 @@ def consume_rabbitmq():
     )
 
     def callback(ch, method, properties, body):
-        """Processes received messages and acknowledges them."""
+        """Processes received messages and acknowledges them.
+
+        This function is called for each message received from RabbitMQ. It attempts
+        to parse the message as JSON and process it using the `analyze` function. If
+        the message is invalid or if an error occurs during processing, it will be
+        logged and either requeued (if the error is transient) or discarded (if the
+        error is due to invalid input).
+        """
         try:
             message = json.loads(body)
             logger.info("Received message: %s", message)
@@ -104,7 +129,17 @@ def consume_rabbitmq():
 
 
 def consume_sqs():
-    """Consumes messages from AWS SQS, processes them, and sends output."""
+    """
+    Consumes messages from AWS SQS, processes them, and sends output.
+
+    This function continuously polls the specified SQS queue for messages,
+    processes them using the `analyze` function, and sends the processed data
+    to the output handler. If an error occurs while processing a message, it
+    will be logged and the message will be deleted from the queue.
+
+    If the SQS client is not initialized or if the queue URL is not provided,
+    the function will log an error and do nothing.
+    """
     if not sqs_client or not SQS_QUEUE_URL:
         logger.error("SQS client is not initialized or missing queue URL.")
         return
@@ -149,10 +184,23 @@ def consume_sqs():
 
 
 def consume_messages():
-    """Determines the queue type and starts the appropriate consumer."""
+    """
+    Determines the type of message queue specified by the `QUEUE_TYPE` environment
+    variable and starts the appropriate consumer.
+
+    The `QUEUE_TYPE` environment variable can be set to "rabbitmq" or "sqs" to
+    select the type of message queue to use. If the variable is not set or is
+    set to an invalid value, an error message will be logged and the function
+    will do nothing.
+
+    :raises ValueError: If the `QUEUE_TYPE` environment variable is not set or
+        has an invalid value.
+    """
     if QUEUE_TYPE == "rabbitmq":
         consume_rabbitmq()
     elif QUEUE_TYPE == "sqs":
         consume_sqs()
     else:
-        logger.error("Invalid QUEUE_TYPE specified. Use 'rabbitmq' or 'sqs'.")
+        logger.error(
+            "Invalid QUEUE_TYPE specified. Use 'rabbitmq' or 'sqs'."
+        )

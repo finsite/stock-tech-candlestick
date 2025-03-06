@@ -303,28 +303,28 @@ def detect_candlestick_pattern(
     # **Single-Candle Patterns**
     patterns = {
         "Doji": body_size <= small_body_threshold
-            and upper_shadow > body_size
-            and lower_shadow > body_size,
+        and upper_shadow > body_size
+        and lower_shadow > body_size,
         "Dragonfly Doji": body_size <= small_body_threshold
-            and lower_shadow > body_size * 2
-            and upper_shadow == 0,
+        and lower_shadow > body_size * 2
+        and upper_shadow == 0,
         "Gravestone Doji": body_size <= small_body_threshold
-            and upper_shadow > body_size * 2
-            and lower_shadow == 0,
+        and upper_shadow > body_size * 2
+        and lower_shadow == 0,
         "Spinning Top": body_size > small_body_threshold
-            and body_size < 0.4 * candle_range,
+        and body_size < 0.4 * candle_range,
         "Hammer": body_size > small_body_threshold
-            and close_price > open_price
-            and lower_shadow > body_size * 2,
+        and close_price > open_price
+        and lower_shadow > body_size * 2,
         "Inverted Hammer": body_size > small_body_threshold
-            and close_price > open_price
-            and upper_shadow > body_size * 2,
+        and close_price > open_price
+        and upper_shadow > body_size * 2,
         "Shooting Star": body_size > small_body_threshold
-            and close_price < open_price
-            and upper_shadow > body_size * 2,
+        and close_price < open_price
+        and upper_shadow > body_size * 2,
         "Marubozu": body_size > large_body_threshold
-            and upper_shadow == 0
-            and lower_shadow == 0,
+        and upper_shadow == 0
+        and lower_shadow == 0,
     }
 
     for pattern, condition in patterns.items():
