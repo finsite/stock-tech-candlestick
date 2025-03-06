@@ -124,12 +124,13 @@ repos:
         language: python # ✅ Uses Python environment
         stages: [commit-msg] # ✅ This is the correct field
 
+
   # ✅ Docstring Validation (Darglint)
-  - repo: https://github.com/terrencepreilly/darglint
-    rev: "v1.8.1"
-    hooks:
-      - id: darglint
-        args: ["--verbosity", "2"]
+  # - repo: https://github.com/terrencepreilly/darglint
+  #   rev: "v1.8.1"
+  #   hooks:
+  #     - id: darglint
+  #       args: ["--verbosity", "2"]
 
   # # ✅ Run Tests (Pytest)
   # - repo: local

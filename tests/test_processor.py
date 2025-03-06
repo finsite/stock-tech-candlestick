@@ -10,16 +10,6 @@
 
 # class TestCandlestickPatterns(unittest.TestCase):
 
-#     def test_valid_doji(self):
-#         """Test Doji candlestick pattern detection"""
-#         data = {
-#             "symbol": "AAPL",
-#             "timestamp": "2025-02-22T14:30:00Z",
-#             "price": 150.0,
-#             "source": "YFinance",
-#             "data": {
-#                 "open": 150.0,
-#                 "high": 151.0,
 #                 "low": 149.0,
 #                 "close": 150.0,
 #                 "volume": 1000000,
@@ -37,7 +27,6 @@
 #             "source": "YFinance",
 #             "data": {
 #                 "open": 148.0,
-#                 "high": 149.0,
 #                 "low": 145.0,
 #                 "close": 149.0,
 #                 "volume": 1000000,
