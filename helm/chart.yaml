@@ -1,5 +1,5 @@
 apiVersion: v2
 name: stock-tech-candlestick
-description: Helm chart for stock analysis app
+description: A Helm chart for deploying stock-tech-candlestick
 version: 0.1.0
 appVersion: "latest"

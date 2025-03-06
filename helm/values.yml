@@ -1,4 +1,4 @@
-replicaCount: 3
+replicaCount: 1
 
 image:
   repository: your-registry/stock-tech-candlestick
@@ -6,12 +6,12 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  type: LoadBalancer
+  type: LoadBalancer # Default to LoadBalancer, but can be ClusterIP/NodePort
   port: 80
   targetPort: 8000
 
 environment:
   ENVIRONMENT: "production"
   LOG_LEVEL: "info"
-  RABBITMQ_HOST: "rabbitmq.prod.internal"
-  RABBITMQ_QUEUE: "candlestick_prod_queue"
+  RABBITMQ_HOST: "stock-tech-candlestick-rabbitmq.prod.internal"
+  RABBITMQ_QUEUE: "stock-tech-candlestick_queue"
