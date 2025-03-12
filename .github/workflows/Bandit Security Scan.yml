@@ -1,4 +1,4 @@
-name: BanditSecurity Scan
+name: Bandit Security Scan
 on: [push, pull_request]
 jobs:
   security-scan:
