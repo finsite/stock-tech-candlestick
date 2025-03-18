@@ -1,7 +1,7 @@
-name: SphynxDocumentation Build
+name: Bandit Security Scan
 on: [push, pull_request]
 jobs:
-  docs:
+  security-scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -13,13 +13,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install sphinx
-      - name: Build Documentation
-        run: |
-          cd docs
-          make html
-      - name: Upload Documentation Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: documentation
-          path: docs/_build/html
+          pip install bandit safety
+      - name: Run Bandit (code security)
+        run: bandit .
+
