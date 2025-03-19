@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-tech-candlestick
+  labels:
+    app: stock-tech-candlestick
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-tech-candlestick
+  template:
+    metadata:
+      labels:
+        app: stock-tech-candlestick
+    spec:
+      containers:
+      - name: stock-tech-candlestick
+        image: stock-tech-candlestick:latest
+        ports:
+        - containerPort: 8080
