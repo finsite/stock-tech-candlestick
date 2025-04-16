@@ -1,28 +1,32 @@
-# Use official lightweight Python image
-FROM python:3.12-slim
+# ---- Stage 1: Builder ----
+FROM python:3.12-slim AS builder
 
-# Set the working directory
 WORKDIR /app
 
-# Copy dependencies first to leverage Docker caching
-COPY requirements.txt requirements-dev.txt ./
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y gcc libffi-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt .
 
-# Copy the application source code
-COPY src ./src
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 
-# Set environment variables (confirming RabbitMQ configuration)
-ENV RABBITMQ_HOST=rabbitmq
-ENV RABBITMQ_EXCHANGE=stock_analysis
-ENV RABBITMQ_ROUTING_KEY=candlestick
-ENV RABBITMQ_USER=guest
-ENV RABBITMQ_PASSWORD=guest
-ENV RABBITMQ_QUEUE=stock_analysis_queue
+# ---- Stage 2: Final Runtime ----
+FROM python:3.12-slim
 
-# Expose necessary ports (if needed, adjust based on RabbitMQ setup)
-EXPOSE 5672 15672
+WORKDIR /app
 
-# Command to start the application
-CMD ["python", "-u", "src/app/main.py"]
+COPY --from=builder /install /usr/local
+
+COPY src /app/src
+
+ENV PYTHONPATH="/app"
+
+RUN useradd -m appuser && chown -R appuser /app
+
+USER appuser
+
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD pgrep -f "main.py" > /dev/null || exit 1
+
+CMD ["python", "/app/src/app/main.py"]

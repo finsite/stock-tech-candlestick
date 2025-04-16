@@ -1,6 +1,9 @@
 import json
 
-from app.logger import logger
+from app.logger import setup_logger
+
+# Initialize logger
+logger = setup_logger(__name__)
 
 
 def send_to_output(data: dict[str, any]) -> None:
