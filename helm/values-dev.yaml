@@ -1,7 +1,0 @@
-replicaCount: 1
-
-environment:
-  ENVIRONMENT: "development"
-  LOG_LEVEL: "debug"
-  RABBITMQ_HOST: "rabbitmq.dev.internal"
-  RABBITMQ_QUEUE: "candlestick_dev_queue"

@@ -1,32 +1,71 @@
-[tool.poetry]
-name = "stock-tech-candlestick"
-version = "0.1.1"
-description = "A technical analysis module for candlestick pattern detection."
-authors = ["Your Name <your.email@example.com>"]
-license = "MIT"
-readme = "README.md"
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.pytest_cache
+  | \.ruff_cache
+  | build
+  | dist
+)/
+'''
 
-[tool.bump-my-version]
-current_version = "0.1.0"
-parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
-serialize = ["{major}.{minor}.{patch}"]
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = ["tests"]
 
-commit = true
-message = "Bump version: {current_version} → {new_version}"
-tag = true
-tag_name = "v{new_version}"
-tag_message = "Version {new_version}"
+[tool.ruff.lint]
+extend-select = ["D"]
+ignore = ["D203", "D211", "D213", "D401", "D205"]
 
-[[tool.bump-my-version.files]]
-filename = "pyproject.toml"
-search = 'version = "{current_version}"'
-replace = 'version = "{new_version}"'
+[tool.isort]
+profile = "black"
 
-[[tool.bump-my-version.files]]
-filename = "src/app/__init__.py"
-search = '__version__ = "{current_version}"'
-replace = '__version__ = "{new_version}"'
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+strict = true
+pretty = true
+show_error_codes = true
+warn_unused_ignores = true
+warn_return_any = true
+explicit_package_bases = true  
+exclude = ["^tests/"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "--strict-markers --tb=short -q"
+testpaths = ["tests"]
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
+    
+[tool.docformatter]
+wrap-summaries = 88
+wrap-descriptions = 88
+pre-summary-newline = true
+make-summary-multi-line = false
+
+[tool.pydocstyle]
+convention = "google"
+add-ignore = ["D100", "D104"]
+match = ".*\\.py"
+match-dir = "[^\\.].*"
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+tag_format = "v$version"
