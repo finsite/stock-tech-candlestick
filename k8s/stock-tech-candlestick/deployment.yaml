@@ -15,7 +15,7 @@ spec:
         app: stock-tech-candlestick
     spec:
       containers:
-      - name: stock-tech-candlestick
-        image: stock-tech-candlestick:latest
-        ports:
-        - containerPort: 8080
+        - name: stock-tech-candlestick
+          image: stock-tech-candlestick:latest
+          ports:
+            - containerPort: 8080

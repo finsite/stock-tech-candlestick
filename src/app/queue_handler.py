@@ -35,8 +35,7 @@ if QUEUE_TYPE == "sqs":
 
 
 def connect_to_rabbitmq() -> pika.BlockingConnection:
-    """
-    Creates and returns a RabbitMQ connection with retries.
+    """Creates and returns a RabbitMQ connection with retries.
 
     Establishes a connection to RabbitMQ and returns the connection object.
     If the connection fails, it will retry up to 5 times with 5 seconds between retries.
@@ -51,9 +50,7 @@ def connect_to_rabbitmq() -> pika.BlockingConnection:
             connection_params: pika.ConnectionParameters = pika.ConnectionParameters(
                 host=RABBITMQ_HOST
             )
-            connection: pika.BlockingConnection = pika.BlockingConnection(
-                connection_params
-            )
+            connection: pika.BlockingConnection = pika.BlockingConnection(connection_params)
             if connection.is_open:
                 logger.info("Connected to RabbitMQ")
                 return connection
@@ -71,8 +68,7 @@ def connect_to_rabbitmq() -> pika.BlockingConnection:
 
 
 def consume_rabbitmq() -> None:
-    """
-    Consumes messages from RabbitMQ, processes them, and sends output.
+    """Consumes messages from RabbitMQ, processes them, and sends output.
 
     Establishes a connection to RabbitMQ, declares an exchange, queue, and binding,
     and starts consuming messages. The messages are processed by the `analyze`
@@ -86,16 +82,16 @@ def consume_rabbitmq() -> None:
     a Ctrl+C event. When stopped, the RabbitMQ connection is closed and any
     remaining messages are acknowledged.
 
-    Returns:
+    Returns
+    -------
         None
+
     """
     connection: pika.BlockingConnection = connect_to_rabbitmq()
     channel: pika.adapters.blocking_connection.BlockingChannel = connection.channel()
 
     # Declare exchange, queue, and binding
-    channel.exchange_declare(
-        exchange=RABBITMQ_EXCHANGE, exchange_type="topic", durable=True
-    )
+    channel.exchange_declare(exchange=RABBITMQ_EXCHANGE, exchange_type="topic", durable=True)
     channel.queue_declare(queue=RABBITMQ_QUEUE, durable=True)
     channel.queue_bind(
         exchange=RABBITMQ_EXCHANGE,
@@ -109,8 +105,7 @@ def consume_rabbitmq() -> None:
         properties: pika.spec.BasicProperties,
         body: bytes,
     ) -> None:
-        """
-        Callback function for processing received messages from RabbitMQ.
+        """Callback function for processing received messages from RabbitMQ.
 
         This function is triggered for each message received from RabbitMQ. It
         attempts to decode the message body from JSON and processes it using the
@@ -120,13 +115,16 @@ def consume_rabbitmq() -> None:
         error is logged and the message is requeued for retry.
 
         Args:
+        ----
             ch (pika.adapters.blocking_connection.BlockingChannel): The channel object.
             method (pika.spec.Basic.Deliver): The delivery method associated with the message.
             properties (pika.spec.BasicProperties): The properties of the message.
             body (bytes): The message body received from RabbitMQ.
 
         Returns:
+        -------
             None
+
         """
         try:
             # Parse the message body as JSON
@@ -163,8 +161,7 @@ def consume_rabbitmq() -> None:
 
 
 def consume_sqs() -> None:
-    """
-    Consumes messages from AWS SQS, processes them, and sends output.
+    """Consumes messages from AWS SQS, processes them, and sends output.
 
     This function continuously polls the specified SQS queue for messages,
     processes them using the `analyze` function, and sends the processed data
@@ -208,9 +205,7 @@ def consume_sqs() -> None:
                     logger.info("Deleted SQS message: %s", message["MessageId"])
 
                 except json.JSONDecodeError:
-                    logger.error(
-                        "Invalid JSON format in SQS message: %s", message["Body"]
-                    )
+                    logger.error("Invalid JSON format in SQS message: %s", message["Body"])
                 except Exception as e:
                     logger.error("Error processing SQS message: %s", e)
 
@@ -220,8 +215,7 @@ def consume_sqs() -> None:
 
 
 def consume_messages() -> None:
-    """
-    Determines the type of message queue specified by the `QUEUE_TYPE` environment
+    """Determines the type of message queue specified by the `QUEUE_TYPE` environment
     variable and starts the appropriate consumer.
 
     The `QUEUE_TYPE` environment variable can be set to "rabbitmq" or "sqs" to

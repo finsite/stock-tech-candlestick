@@ -4,14 +4,16 @@ from app.logger import logger
 
 
 def send_to_output(data: dict[str, any]) -> None:
-    """
-    Outputs processed candlestick analysis to a chosen output target.
+    """Outputs processed candlestick analysis to a chosen output target.
 
     Args:
+    ----
         data (dict[str, any]): The processed candlestick analysis data as a dictionary.
 
     Returns:
+    -------
         None
+
     """
     try:
         # Convert to JSON for output
