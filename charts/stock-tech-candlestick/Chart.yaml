@@ -1,3 +1,4 @@
+---
 apiVersion: v2
 name: stock-tech-candlestick
 description: A Helm chart for stock-tech-candlestick
