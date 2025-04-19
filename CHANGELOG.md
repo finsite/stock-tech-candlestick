@@ -1,6 +1,5 @@
 ## Changelog
 
-- updated dockerfile (Mark Quinn)
-- Merge branch 'main' of https://github.com/finsite/stock-tech-candlestick (Mark Quinn)
-- updated pollers (Mark Quinn)
+- updated output_handler (Mark Quinn)
+- renamed labeler to fix github actions (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
