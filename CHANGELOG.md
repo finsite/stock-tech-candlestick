@@ -1,16 +1,5 @@
 ## Changelog
 
-- fixed yaml linting (Mark Quinn)
-- Merge pull request #2 from finsite/renovate/github-actions (Mark)
-- Merge pull request #3 from finsite/renovate/python-dependencies (Mark)
-- chore(deps): update python dependencies (renovate[bot])
-- Merge pull request #4 from finsite/renovate/dockerfile-dependencies (Mark)
-- Merge pull request #5 from finsite/renovate/major-github-actions (Mark)
-- Merge pull request #6 from finsite/renovate/major-python-dependencies (Mark)
-- Merge pull request #7 from finsite/renovate/migrate-config (Mark)
+- Merge branch 'main' of https://github.com/finsite/stock-tech-candlestick (Mark Quinn)
+- migrating to pyproject.toml fully (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
-- chore(config): migrate config renovate.json (renovate[bot])
-- chore(deps): update python dependencies (renovate[bot])
-- chore(deps): update github actions (renovate[bot])
-- chore(deps): update python docker tag to v3.13 (renovate[bot])
-- chore(deps): update dependency python to 3.13 (renovate[bot])
