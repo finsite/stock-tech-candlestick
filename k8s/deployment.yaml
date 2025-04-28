@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,10 +20,10 @@ spec:
             - containerPort: 8000
           env:
             - name: ENVIRONMENT
-              value: "development"
+              value: development
             - name: LOG_LEVEL
-              value: "debug"
+              value: debug
             - name: RABBITMQ_HOST
-              value: "rabbitmq.dev.internal"
+              value: rabbitmq.dev.internal
             - name: RABBITMQ_QUEUE
-              value: "candlestick_dev_queue"
+              value: candlestick_dev_queue
