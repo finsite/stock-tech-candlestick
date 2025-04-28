@@ -4,8 +4,9 @@ Module to publish processed analysis data to RabbitMQ or AWS SQS.
 
 import json
 import os
-import pika
+
 import boto3
+import pika
 from botocore.exceptions import BotoCoreError, NoCredentialsError
 
 from app.logger import setup_logger
