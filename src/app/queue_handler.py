@@ -5,6 +5,7 @@ import time
 import boto3
 import pika
 from botocore.exceptions import BotoCoreError, NoCredentialsError
+from pika.exceptions import AMQPConnectionError
 
 from app.logger import setup_logger
 from app.output_handler import send_to_output
@@ -21,6 +22,7 @@ RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
 RABBITMQ_EXCHANGE = os.getenv("RABBITMQ_EXCHANGE", "stock_analysis")
 RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE", "analysis_queue")
 RABBITMQ_ROUTING_KEY = os.getenv("RABBITMQ_ROUTING_KEY", "#")
+RETRY_DELAY = int(os.getenv("RETRY_DELAY_SECONDS", "5"))
 
 # SQS settings
 SQS_QUEUE_URL = os.getenv("SQS_QUEUE_URL", "")
@@ -50,10 +52,10 @@ def connect_to_rabbitmq() -> pika.BlockingConnection:
                 return connection
             else:
                 logger.error("Failed to open RabbitMQ connection")
-        except (pika.exceptions.AMQPConnectionError, Exception) as e:
+        except (AMQPConnectionError, Exception) as e:
             retries -= 1
             logger.warning("Failed to connect to RabbitMQ (%s), retrying in 5s...", str(e))
-            time.sleep(5)
+            time.sleep(RETRY_DELAY)
     logger.error("Could not connect to RabbitMQ after multiple attempts")
     raise ConnectionError("RabbitMQ connection failed")
 
