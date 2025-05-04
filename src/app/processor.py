@@ -17,12 +17,17 @@ def analyze(
     Detects candlestick patterns from stock price data and logs detected patterns.
 
     Args:
-        data (dict[str, Any]): The current stock data containing OHLC values.
-        prev_data (dict[str, Any] | None): Previous stock data. Defaults to None.
-        prev_prev_data (dict[str, Any] | None): Two-periods-ago stock data. Defaults to None.
+      data(dict[str): The current stock data containing OHLC values.
+      prev_data(dict[str): Previous stock data. Defaults to None.
+      prev_prev_data(dict[str): Two-periods-ago stock data. Defaults to None.
+      data: dict[str:
+      Any]:
+      prev_data: dict[str:
+      Any] | None:  (Default value = None)
+      prev_prev_data: dict[str:
 
     Returns:
-        dict[str, Any]: A dictionary containing the detected pattern, original data, and metadata.
+      dict[str, Any]: A dictionary containing the detected pattern, original data, and metadata.
     """
     try:
         ohlc_data = data["data"]
@@ -66,8 +71,17 @@ def detect_candlestick_pattern(
     """
     Determines the type of candlestick pattern based on price movements.
 
+    Args:
+      open_price: float:
+      high_price: float:
+      low_price: float:
+      close_price: float:
+      prev_data: dict[str:
+      float] | None:  (Default value = None)
+      prev_prev_data: dict[str:
+
     Returns:
-        str: The name of the detected candlestick pattern.
+      str: The name of the detected candlestick pattern.
     """
     body_size = abs(close_price - open_price)
     upper_shadow = high_price - max(open_price, close_price)
@@ -161,8 +175,14 @@ def detect_three_black_crows(
     """
     Detects the Three Black Crows candlestick pattern.
 
+    Args:
+      prev_prev_data: dict[str:
+      float]:
+      prev_data: dict[str:
+      current_data: dict[str:
+
     Returns:
-        bool: True if the pattern is detected, False otherwise.
+      bool: True if the pattern is detected, False otherwise.
     """
     p1_open, p1_close = prev_prev_data["open"], prev_prev_data["close"]
     p2_open, p2_close = prev_data["open"], prev_data["close"]

@@ -35,13 +35,9 @@ def main() -> None:
     service and invokes the `consume_messages` function to begin processing
     messages.
 
-    Parameters
-    ----------
-        None
+    Args:
 
-    Returns
-    -------
-        None
+    Returns:
     """
     # Log the start of the Candlestick Analysis Service
     logger.info("Starting Candlestick Analysis Service...")
