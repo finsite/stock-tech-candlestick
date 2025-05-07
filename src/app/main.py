@@ -1,5 +1,4 @@
-"""
-Main entry point of the application.
+"""Main entry point of the application.
 
 This script is responsible for starting the Candlestick Analysis Service.
 
@@ -11,6 +10,7 @@ Imports:
 
 Attributes:
     logger (logging.Logger): Configured logger for the application.
+
 """
 
 import os
@@ -27,8 +27,7 @@ logger = setup_logger(__name__)
 
 
 def main() -> None:
-    """
-    Main entry point of the application.
+    """Main entry point of the application.
 
     This function starts the Candlestick Analysis Service by consuming
     messages from the configured message queue. It logs the start of the
@@ -38,6 +37,7 @@ def main() -> None:
     Args:
 
     Returns:
+
     """
     # Log the start of the Candlestick Analysis Service
     logger.info("Starting Candlestick Analysis Service...")

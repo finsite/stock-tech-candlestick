@@ -1,6 +1,5 @@
 # Changelog
 
-
 - Merge branch 'main' of https://github.com/finsite/stock-tech-candlestick (Mark
   Quinn)
 - Making sure Dockerfile is correct (Mark Quinn)

@@ -13,8 +13,7 @@ def analyze(
     prev_data: dict[str, Any] | None = None,
     prev_prev_data: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """
-    Detects candlestick patterns from stock price data and logs detected patterns.
+    """Detects candlestick patterns from stock price data and logs detected patterns.
 
     Args:
       data(dict[str): The current stock data containing OHLC values.
@@ -28,6 +27,7 @@ def analyze(
 
     Returns:
       dict[str, Any]: A dictionary containing the detected pattern, original data, and metadata.
+
     """
     try:
         ohlc_data = data["data"]
@@ -68,8 +68,7 @@ def detect_candlestick_pattern(
     prev_data: dict[str, float] | None = None,
     prev_prev_data: dict[str, float] | None = None,
 ) -> str:
-    """
-    Determines the type of candlestick pattern based on price movements.
+    """Determines the type of candlestick pattern based on price movements.
 
     Args:
       open_price: float:
@@ -82,6 +81,7 @@ def detect_candlestick_pattern(
 
     Returns:
       str: The name of the detected candlestick pattern.
+
     """
     body_size = abs(close_price - open_price)
     upper_shadow = high_price - max(open_price, close_price)
@@ -172,8 +172,7 @@ def detect_three_black_crows(
     prev_data: dict[str, float],
     current_data: dict[str, float],
 ) -> bool:
-    """
-    Detects the Three Black Crows candlestick pattern.
+    """Detects the Three Black Crows candlestick pattern.
 
     Args:
       prev_prev_data: dict[str:
@@ -183,6 +182,7 @@ def detect_three_black_crows(
 
     Returns:
       bool: True if the pattern is detected, False otherwise.
+
     """
     p1_open, p1_close = prev_prev_data["open"], prev_prev_data["close"]
     p2_open, p2_close = prev_data["open"], prev_data["close"]
