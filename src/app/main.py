@@ -10,7 +10,6 @@ Imports:
 
 Attributes:
     logger (logging.Logger): Configured logger for the application.
-
 """
 
 import os
@@ -37,7 +36,6 @@ def main() -> None:
     Args:
 
     Returns:
-
     """
     # Log the start of the Candlestick Analysis Service
     logger.info("Starting Candlestick Analysis Service...")
