@@ -15,9 +15,19 @@ from pika.exceptions import AMQPConnectionError
 from app import config
 from app.logger import setup_logger
 from app.output_handler import send_to_output
-from app.processor import analyze  # or analyze_candlestick if renamed
+from app.processor import analyze
 
 logger = setup_logger(__name__)
+
+
+def validate_data(payload: dict) -> bool:
+    """Basic schema check to ensure payload contains expected structure."""
+    if "data" not in payload or not isinstance(payload["data"], dict):
+        logger.error("❌ Invalid payload — missing or malformed 'data': %s", payload)
+        return False
+    if "symbol" not in payload or "timestamp" not in payload:
+        logger.warning("⚠️ Payload missing 'symbol' or 'timestamp': %s", payload)
+    return True
 
 
 def connect_to_rabbitmq() -> pika.BlockingConnection:
@@ -38,13 +48,13 @@ def connect_to_rabbitmq() -> pika.BlockingConnection:
             )
             connection = pika.BlockingConnection(parameters)
             if connection.is_open:
-                logger.info("Connected to RabbitMQ")
+                logger.info("✅ Connected to RabbitMQ")
                 return connection
         except (AMQPConnectionError, Exception) as e:
             retries -= 1
-            logger.warning("RabbitMQ connection failed: %s. Retrying in %ss...", e, retry_delay)
+            logger.warning("🔁 RabbitMQ connection failed: %s. Retrying in %ss...", e, retry_delay)
             time.sleep(retry_delay)
-    raise ConnectionError("RabbitMQ connection failed after retries")
+    raise ConnectionError("❌ RabbitMQ connection failed after retries")
 
 
 def consume_rabbitmq() -> None:
@@ -66,9 +76,15 @@ def consume_rabbitmq() -> None:
         try:
             message = json.loads(body)
             logger.info("📩 Received message: %s", message)
+
+            if not validate_data(message):
+                ch.basic_ack(delivery_tag=method.delivery_tag)
+                return
+
             result = analyze(message)
             send_to_output(result)
             ch.basic_ack(delivery_tag=method.delivery_tag)
+
         except json.JSONDecodeError:
             logger.error("❌ Invalid JSON: %s", body)
             ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
@@ -81,11 +97,11 @@ def consume_rabbitmq() -> None:
     try:
         channel.start_consuming()
     except KeyboardInterrupt:
-        logger.info("Gracefully stopping RabbitMQ consumer...")
+        logger.info("🛑 Gracefully stopping RabbitMQ consumer...")
         channel.stop_consuming()
     finally:
         connection.close()
-        logger.info("RabbitMQ connection closed.")
+        logger.info("🔒 RabbitMQ connection closed.")
 
 
 def consume_sqs() -> None:
@@ -98,7 +114,7 @@ def consume_sqs() -> None:
     try:
         sqs_client = boto3.client("sqs", region_name=region)
     except (BotoCoreError, NoCredentialsError) as e:
-        logger.error("Failed to initialize SQS client: %s", e)
+        logger.error("❌ Failed to initialize SQS client: %s", e)
         return
 
     logger.info("📡 Polling for SQS messages...")
@@ -115,6 +131,10 @@ def consume_sqs() -> None:
                 try:
                     body = json.loads(msg["Body"])
                     logger.info("📩 Received SQS message: %s", body)
+
+                    if not validate_data(body):
+                        continue
+
                     result = analyze(body)
                     send_to_output(result)
 
@@ -127,7 +147,7 @@ def consume_sqs() -> None:
                 except Exception as e:
                     logger.error("❌ Error processing SQS message: %s", e)
         except Exception as e:
-            logger.error("SQS polling failed: %s", e)
+            logger.error("❌ SQS polling failed: %s", e)
             time.sleep(polling_interval)
 
 
