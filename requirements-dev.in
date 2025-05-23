@@ -27,7 +27,6 @@ mkdocs-material>=9.0
 # Security tools
 # ======================
 bandit>=1.7.5,<2.0
-safety>=3.0,<4.0
 
 # ======================
 # Dependency scanner

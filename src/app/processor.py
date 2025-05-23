@@ -2,7 +2,6 @@ from typing import Any
 
 from app.logger import setup_logger
 
-# Initialize logger
 logger = setup_logger(__name__)
 
 __all__ = ["analyze"]
@@ -13,24 +12,18 @@ def analyze(
     prev_data: dict[str, Any] | None = None,
     prev_prev_data: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Detects candlestick patterns from stock price data and logs detected
-    patterns.
+    """Detects candlestick patterns from stock price data and logs detected patterns.
 
     Args:
-      data(dict[str): The current stock data containing OHLC values.
-      prev_data(dict[str): Previous stock data. Defaults to None.
-      prev_prev_data(dict[str): Two-periods-ago stock data. Defaults to None.
-      data: dict[str:
-      Any]:
-      prev_data: dict[str:
-      Any] | None: (Default value = None)
-      prev_prev_data: dict[str:
-      data: dict[str:
-      prev_data: dict[str:
-      prev_prev_data: dict[str:
+    ----
+        data (dict[str, Any]): The current stock data containing OHLC values.
+        prev_data (Optional[dict[str, Any]]): Previous stock data.
+        prev_prev_data (Optional[dict[str, Any]]): Two-periods-ago stock data.
 
     Returns:
-      dict[str, Any]: A dictionary containing the detected pattern, original data, and metadata.
+    -------
+        dict[str, Any]: A dictionary containing the detected pattern, metadata, and raw input.
+
     """
     try:
         ohlc_data = data["data"]
@@ -42,8 +35,10 @@ def analyze(
         logger.error("Invalid data format: %s", data)
         return {"error": "Invalid data format. Expected 'data' with open, high, low, close."}
 
-    prev_data = prev_data.get("data") if prev_data else None
-    prev_prev_data = prev_prev_data.get("data") if prev_prev_data else None
+    prev_data = prev_data.get("data") if prev_data and "data" in prev_data else None
+    prev_prev_data = (
+        prev_prev_data.get("data") if prev_prev_data and "data" in prev_prev_data else None
+    )
 
     pattern = detect_candlestick_pattern(
         open_price, high_price, low_price, close_price, prev_data, prev_prev_data
@@ -52,13 +47,16 @@ def analyze(
     logger.info(
         "Detected pattern: %s | Symbol: %s | Time: %s",
         pattern,
-        data["symbol"],
-        data["timestamp"],
+        data.get("symbol", "unknown"),
+        data.get("timestamp", "unknown"),
     )
+
     return {
-        "symbol": data["symbol"],
-        "timestamp": data["timestamp"],
-        "candlestick_pattern": pattern,
+        "symbol": data.get("symbol"),
+        "timestamp": data.get("timestamp"),
+        "pattern": pattern,
+        "model": "candlestick",
+        "model_version": "v1.0",
         "raw_data": data,
     }
 
@@ -73,24 +71,12 @@ def detect_candlestick_pattern(
 ) -> str:
     """Determines the type of candlestick pattern based on price movements.
 
-    Args:
-      open_price: float:
-      high_price: float:
-      low_price: float:
-      close_price: float:
-      prev_data: dict[str:
-      float] | None: (Default value = None)
-      prev_prev_data: dict[str:
-      open_price: float:
-      high_price: float:
-      low_price: float:
-      close_price: float:
-      prev_data: dict[str:
-      prev_prev_data: dict[str:
+    Returns
+    -------
+        str: The name of the detected candlestick pattern.
 
-    Returns:
-      str: The name of the detected candlestick pattern.
     """
+    EPSILON = 1e-5
     body_size = abs(close_price - open_price)
     upper_shadow = high_price - max(open_price, close_price)
     lower_shadow = min(open_price, close_price) - low_price
@@ -108,34 +94,30 @@ def detect_candlestick_pattern(
     large_body_threshold = 0.6 * candle_range
 
     if prev_data:
-        prev_open = prev_data["open"]
-        prev_close = prev_data["close"]
+        try:
+            prev_open = float(prev_data["open"])
+            prev_close = float(prev_data["close"])
+            prev_high = float(prev_data["high"])
+            prev_low = float(prev_data["low"])
+        except (KeyError, TypeError, ValueError):
+            prev_open = prev_close = prev_high = prev_low = None
 
-        if (
-            prev_close < prev_open
-            and close_price > prev_open
-            and close_price > (prev_open + prev_close) / 2
-            and close_price < prev_open
-        ):
-            logger.info("Pattern Matched: Piercing Pattern")
-            return "Piercing Pattern"
+        if prev_open and prev_close:
+            if prev_close < prev_open and close_price > prev_close and open_price < prev_close:
+                logger.info("Pattern Matched: Piercing Pattern")
+                return "Piercing Pattern"
 
-        if (
-            prev_close > prev_open
-            and close_price < prev_open
-            and close_price < (prev_open + prev_close) / 2
-            and close_price > prev_open
-        ):
-            logger.info("Pattern Matched: Dark Cloud Cover")
-            return "Dark Cloud Cover"
+            if prev_close > prev_open and close_price < prev_close and open_price > prev_close:
+                logger.info("Pattern Matched: Dark Cloud Cover")
+                return "Dark Cloud Cover"
 
-        if prev_data["high"] == high_price and prev_close > open_price:
-            logger.info("Pattern Matched: Tweezer Tops")
-            return "Tweezer Tops"
+            if prev_high == high_price and prev_close > open_price:
+                logger.info("Pattern Matched: Tweezer Tops")
+                return "Tweezer Tops"
 
-        if prev_data["low"] == low_price and prev_close < open_price:
-            logger.info("Pattern Matched: Tweezer Bottoms")
-            return "Tweezer Bottoms"
+            if prev_low == low_price and prev_close < open_price:
+                logger.info("Pattern Matched: Tweezer Bottoms")
+                return "Tweezer Bottoms"
 
     patterns = {
         "Doji": body_size <= small_body_threshold
@@ -143,10 +125,10 @@ def detect_candlestick_pattern(
         and lower_shadow > body_size,
         "Dragonfly Doji": body_size <= small_body_threshold
         and lower_shadow > body_size * 2
-        and upper_shadow == 0,
+        and abs(upper_shadow) < EPSILON,
         "Gravestone Doji": body_size <= small_body_threshold
         and upper_shadow > body_size * 2
-        and lower_shadow == 0,
+        and abs(lower_shadow) < EPSILON,
         "Spinning Top": small_body_threshold < body_size < 0.4 * candle_range,
         "Hammer": body_size > small_body_threshold
         and close_price > open_price
@@ -157,7 +139,9 @@ def detect_candlestick_pattern(
         "Shooting Star": body_size > small_body_threshold
         and close_price < open_price
         and upper_shadow > body_size * 2,
-        "Marubozu": body_size > large_body_threshold and upper_shadow == 0 and lower_shadow == 0,
+        "Marubozu": body_size > large_body_threshold
+        and abs(upper_shadow) < EPSILON
+        and abs(lower_shadow) < EPSILON,
     }
 
     for pattern, condition in patterns.items():
@@ -182,21 +166,17 @@ def detect_three_black_crows(
 ) -> bool:
     """Detects the Three Black Crows candlestick pattern.
 
-    Args:
-      prev_prev_data: dict[str:
-      float]:
-      prev_data: dict[str:
-      current_data: dict[str:
-      prev_prev_data: dict[str:
-      prev_data: dict[str:
-      current_data: dict[str:
+    Returns
+    -------
+        bool: True if the pattern is detected, False otherwise.
 
-    Returns:
-      bool: True if the pattern is detected, False otherwise.
     """
-    p1_open, p1_close = prev_prev_data["open"], prev_prev_data["close"]
-    p2_open, p2_close = prev_data["open"], prev_data["close"]
-    p3_open, p3_close = current_data["open"], current_data["close"]
+    try:
+        p1_open, p1_close = prev_prev_data["open"], prev_prev_data["close"]
+        p2_open, p2_close = prev_data["open"], prev_data["close"]
+        p3_open, p3_close = current_data["open"], current_data["close"]
+    except (KeyError, TypeError, ValueError):
+        return False
 
     return (
         p1_close < p1_open

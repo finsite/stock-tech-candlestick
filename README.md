@@ -1,72 +1,98 @@
-# Template
+# Stock Tech Candlestick
 
 ## Overview
 
-This is a generic template for a Python application. Please update the details
-as necessary to fit your project.
+`stock-tech-candlestick` is a technical analysis microservice that detects
+candlestick patterns from incoming stock OHLC (open, high, low, close) data. It
+is part of a modular system for stock market analysis built around asynchronous
+message queues.
 
-## Getting Started
+The service supports both RabbitMQ and AWS SQS as queue backends and integrates
+with Vault for secure configuration management.
 
-Provide a brief description of the application and its purpose.
+---
 
-### Prerequisites
+## Features
 
-List any prerequisites needed to run the application.
+- Detects common candlestick patterns (e.g., Doji, Hammer, Marubozu, Three Black
+  Crows)
+- Supports both single-candle and multi-candle analysis
+- Input via RabbitMQ or AWS SQS
+- Outputs results to queue or log
+- Configurable using Vault and environment variables
+- Fully containerizable with minimal external dependencies
 
-```markdown
-Each script supports error logging by default. This feature is optional and can
-be enabled for debugging purposes.
-
-Example files are included with each script. Use the command
-`get-help <scriptname>` to view examples.
-```
+---
 
 ## Installation
 
-1. Clone the repository.
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-org/stock-tech-candlestick.git
+   cd stock-tech-candlestick
+   ```
+
 2. Set up a virtual environment:
 
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-
+   source venv/bin/activate  # or venv\Scripts\activate on Windows
    ```
 
-## Environment Variables
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Define any necessary environment variables for the application:
+---
 
-## Example .env File
+## Configuration
 
-Provide an example `.env` file to illustrate environment variable configuration.
+Configuration is handled via a combination of Vault secrets and environment
+variables. See `config.py` for the full list of supported keys.
 
-## Running the Tests
+Minimum required configuration:
 
-Explain how to execute the tests for the application.
+```env
+QUEUE_TYPE=rabbitmq
+RABBITMQ_HOST=localhost
+RABBITMQ_VHOST=/
+RABBITMQ_USER=guest
+RABBITMQ_PASS=guest
+RABBITMQ_EXCHANGE=stock_analysis
+RABBITMQ_ROUTING_KEY=candlestick
+RABBITMQ_QUEUE=analysis_queue
+```
 
-## Deployment
+---
 
-Document the deployment process, including any required parameters and
-instructions.
+## Running the Service
 
-## Built With
+```bash
+python -m app.main
+```
 
-- [Visual Studio Code](https://code.visualstudio.com/)
+---
 
-## Contributing
+## Example Input
 
-Contributions are welcome! Please feel free to submit issues or pull requests
-for improvements.
+```json
+{
+  "symbol": "AAPL",
+  "timestamp": "2025-04-16T10:00:00",
+  "data": {
+    "open": 160.0,
+    "high": 162.0,
+    "low": 159.5,
+    "close": 161.0,
+    "volume": 100000
+  }
+}
+```
 
-## Authors
-
-- **Mark Quinn** - [Mobious999](https://github.com/mobious999)
-- **Jason Qualkenbush** - [jasonqualkenbush](https://github.com/CosmicQ)
+---
 
 ## License
 
-This project is licensed under the Apache 2.0 License.
-
-## Acknowledgments
-
-Include any references or acknowledgments here.
+Apache 2.0 License
