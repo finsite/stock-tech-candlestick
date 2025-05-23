@@ -5,6 +5,12 @@
 - Making sure Dockerfile is correct (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
 
+## v0.4.0 (2025-05-23)
+
+### Feat
+
+- **poller**: fix queue_sender to make sure it's standardized
+
 ## v0.3.0 (2025-05-23)
 
 ### Feat
