@@ -5,6 +5,12 @@
 - Making sure Dockerfile is correct (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
 
+## v0.5.0 (2025-05-24)
+
+### Feat
+
+- **versioning**: enforce version consistency across pyproject.toml, __init__.py, and changelog
+
 ## v0.4.1 (2025-05-24)
 
 ### Fix
