@@ -5,6 +5,12 @@
 - Making sure Dockerfile is correct (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
 
+## v0.5.1 (2025-06-03)
+
+### Fix
+
+- **files**: Cleanup redundant files and standardize
+
 ## v0.5.0 (2025-05-24)
 
 ### Feat
