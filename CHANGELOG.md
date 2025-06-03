@@ -5,6 +5,12 @@
 - Making sure Dockerfile is correct (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
 
+## v0.5.2 (2025-06-03)
+
+### Fix
+
+- **deps**: standardize termcolor to 2.5.0
+
 ## v0.5.1 (2025-06-03)
 
 ### Fix
