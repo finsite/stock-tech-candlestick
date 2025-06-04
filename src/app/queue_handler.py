@@ -23,6 +23,7 @@ logger = setup_logger(__name__)
 def validate_data(payload: dict) -> bool:
     """Basic schema check to ensure payload contains expected structure.
 
+    :param payload: dict:
     :param payload: dict: 
 
     """
@@ -79,9 +80,9 @@ def consume_rabbitmq() -> None:
     def callback(ch, method, properties, body: bytes) -> None:
         """
 
-        :param ch: 
+        :param ch: param method:
+        :param properties: param body: bytes:
         :param method: 
-        :param properties: 
         :param body: bytes: 
 
         """
