@@ -24,6 +24,7 @@ def validate_data(payload: dict) -> bool:
     """Basic schema check to ensure payload contains expected structure.
 
     :param payload: dict:
+    :param payload: dict:
     :param payload: dict: 
 
     """
@@ -82,7 +83,7 @@ def consume_rabbitmq() -> None:
 
         :param ch: param method:
         :param properties: param body: bytes:
-        :param method: 
+        :param method: param body: bytes:
         :param body: bytes: 
 
         """
