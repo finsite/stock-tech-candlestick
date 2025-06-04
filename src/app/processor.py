@@ -13,17 +13,24 @@ def analyze(
     prev_prev_data: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Detects candlestick patterns from stock price data and logs detected patterns.
-
+    
     Args:
     ----
         data (dict[str, Any]): The current stock data containing OHLC values.
         prev_data (Optional[dict[str, Any]]): Previous stock data.
         prev_prev_data (Optional[dict[str, Any]]): Two-periods-ago stock data.
-
+    
     Returns:
     -------
         dict[str, Any]: A dictionary containing the detected pattern, metadata, and raw input.
 
+    :param data: dict[str: 
+    :param Any]: 
+    :param prev_data: dict[str: 
+    :param Any] | None:  (Default value = None)
+    :param prev_prev_data: dict[str: 
+
+    
     """
     try:
         ohlc_data = data["data"]
@@ -71,10 +78,15 @@ def detect_candlestick_pattern(
 ) -> str:
     """Determines the type of candlestick pattern based on price movements.
 
-    Returns
-    -------
-        str: The name of the detected candlestick pattern.
+    :param open_price: float: 
+    :param high_price: float: 
+    :param low_price: float: 
+    :param close_price: float: 
+    :param prev_data: dict[str: 
+    :param float] | None:  (Default value = None)
+    :param prev_prev_data: dict[str: 
 
+    
     """
     EPSILON = 1e-5
     body_size = abs(close_price - open_price)
@@ -166,10 +178,12 @@ def detect_three_black_crows(
 ) -> bool:
     """Detects the Three Black Crows candlestick pattern.
 
-    Returns
-    -------
-        bool: True if the pattern is detected, False otherwise.
+    :param prev_prev_data: dict[str: 
+    :param float]: 
+    :param prev_data: dict[str: 
+    :param current_data: dict[str: 
 
+    
     """
     try:
         p1_open, p1_close = prev_prev_data["open"], prev_prev_data["close"]

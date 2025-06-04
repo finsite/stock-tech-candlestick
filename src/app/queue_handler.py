@@ -21,7 +21,11 @@ logger = setup_logger(__name__)
 
 
 def validate_data(payload: dict) -> bool:
-    """Basic schema check to ensure payload contains expected structure."""
+    """Basic schema check to ensure payload contains expected structure.
+
+    :param payload: dict: 
+
+    """
     if "data" not in payload or not isinstance(payload["data"], dict):
         logger.error("❌ Invalid payload — missing or malformed 'data': %s", payload)
         return False
@@ -73,6 +77,14 @@ def consume_rabbitmq() -> None:
     )
 
     def callback(ch, method, properties, body: bytes) -> None:
+        """
+
+        :param ch: 
+        :param method: 
+        :param properties: 
+        :param body: bytes: 
+
+        """
         try:
             message = json.loads(body)
             logger.info("📩 Received message: %s", message)
