@@ -26,13 +26,11 @@ def validate_data(payload: dict) -> bool:
     :param payload: dict:
     :param payload: dict:
     :param payload: dict:
-    :param payload: 
-    :type payload: dict :
-    :param payload: 
-    :type payload: dict :
+    :param payload: type payload: dict :
+    :param payload: type payload: dict :
+    :param payload: dict:
     :param payload: dict: 
 
-    
     """
     if "data" not in payload or not isinstance(payload["data"], dict):
         logger.error("❌ Invalid payload — missing or malformed 'data': %s", payload)
@@ -91,13 +89,11 @@ def consume_rabbitmq() -> None:
         :param properties: param body: bytes:
         :param method: param body: bytes:
         :param body: bytes:
-        :param body: 
-        :type body: bytes :
-        :param body: 
-        :type body: bytes :
+        :param body: type body: bytes :
+        :param body: type body: bytes :
+        :param body: bytes:
         :param body: bytes: 
 
-        
         """
         try:
             message = json.loads(body)

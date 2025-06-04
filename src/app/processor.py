@@ -32,25 +32,22 @@ def analyze(
     :param Any: param prev_data: dict[str:
     :param Any: None:  (Default value = None)
     :param prev_prev_data: dict[str:
-    :param data: 
-    :type data: dict[str :
-    :param Any]: 
-    :param prev_data: 
-    :type prev_data: dict[str :
-    :param Any] | None: (Default value = None)
-    :param prev_prev_data: 
-    :type prev_prev_data: dict[str :
-    :param data: 
-    :type data: dict[str :
-    :param prev_data: 
-    :type prev_data: dict[str :
-    :param prev_prev_data: 
-    :type prev_prev_data: dict[str :
+    :param data: type data: dict[str :
+    :param Any: param prev_data:
+    :param Any: None: (Default value = None)
+    :param prev_prev_data: type prev_prev_data: dict[str :
+    :param data: type data: dict[str :
+    :param prev_data: type prev_data: dict[str :
+    :param prev_prev_data: type prev_prev_data: dict[str :
+    :param data: dict[str:
+    :param prev_data: dict[str:
+    :param prev_prev_data: dict[str:
     :param data: dict[str: 
+    :param Any]: 
     :param prev_data: dict[str: 
+    :param Any] | None:  (Default value = None)
     :param prev_prev_data: dict[str: 
 
-    
     """
     try:
         ohlc_data = data["data"]
@@ -119,39 +116,33 @@ def detect_candlestick_pattern(
     :param prev_data: dict[str:
     :param float: None:  (Default value = None)
     :param prev_prev_data: dict[str:
-    :param open_price: 
-    :type open_price: float :
-    :param high_price: 
-    :type high_price: float :
-    :param low_price: 
-    :type low_price: float :
-    :param close_price: 
-    :type close_price: float :
-    :param prev_data: 
-    :type prev_data: dict[str :
-    :param float] | None: (Default value = None)
-    :param prev_prev_data: 
-    :type prev_prev_data: dict[str :
-    :param open_price: 
-    :type open_price: float :
-    :param high_price: 
-    :type high_price: float :
-    :param low_price: 
-    :type low_price: float :
-    :param close_price: 
-    :type close_price: float :
-    :param prev_data: 
-    :type prev_data: dict[str :
-    :param prev_prev_data: 
-    :type prev_prev_data: dict[str :
+    :param open_price: type open_price: float :
+    :param high_price: type high_price: float :
+    :param low_price: type low_price: float :
+    :param close_price: type close_price: float :
+    :param prev_data: type prev_data: dict[str :
+    :param float: None: (Default value = None)
+    :param prev_prev_data: type prev_prev_data: dict[str :
+    :param open_price: type open_price: float :
+    :param high_price: type high_price: float :
+    :param low_price: type low_price: float :
+    :param close_price: type close_price: float :
+    :param prev_data: type prev_data: dict[str :
+    :param prev_prev_data: type prev_prev_data: dict[str :
+    :param open_price: float:
+    :param high_price: float:
+    :param low_price: float:
+    :param close_price: float:
+    :param prev_data: dict[str:
+    :param prev_prev_data: dict[str:
     :param open_price: float: 
     :param high_price: float: 
     :param low_price: float: 
     :param close_price: float: 
     :param prev_data: dict[str: 
+    :param float] | None:  (Default value = None)
     :param prev_prev_data: dict[str: 
 
-    
     """
     EPSILON = 1e-5
     body_size = abs(close_price - open_price)
@@ -252,24 +243,20 @@ def detect_three_black_crows(
     :param prev_prev_data: dict[str:
     :param float: param prev_data: dict[str:
     :param current_data: dict[str:
-    :param prev_prev_data: 
-    :type prev_prev_data: dict[str :
-    :param float]: 
-    :param prev_data: 
-    :type prev_data: dict[str :
-    :param current_data: 
-    :type current_data: dict[str :
-    :param prev_prev_data: 
-    :type prev_prev_data: dict[str :
-    :param prev_data: 
-    :type prev_data: dict[str :
-    :param current_data: 
-    :type current_data: dict[str :
+    :param prev_prev_data: type prev_prev_data: dict[str :
+    :param float: param prev_data:
+    :param current_data: type current_data: dict[str :
+    :param prev_prev_data: type prev_prev_data: dict[str :
+    :param prev_data: type prev_data: dict[str :
+    :param current_data: type current_data: dict[str :
+    :param prev_prev_data: dict[str:
+    :param prev_data: dict[str:
+    :param current_data: dict[str:
     :param prev_prev_data: dict[str: 
+    :param float]: 
     :param prev_data: dict[str: 
     :param current_data: dict[str: 
 
-    
     """
     try:
         p1_open, p1_close = prev_prev_data["open"], prev_prev_data["close"]
