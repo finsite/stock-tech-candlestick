@@ -20,10 +20,6 @@ def analyze(
         prev_data (Optional[dict[str, Any]]): Previous stock data.
         prev_prev_data (Optional[dict[str, Any]]): Two-periods-ago stock data.
 
-    Returns:
-    -------
-        dict[str, Any]: A dictionary containing the detected pattern, metadata, and raw input.
-
     Parameters
     ----------
     data :
@@ -50,19 +46,26 @@ def analyze(
         None:  (Default value = None)
     prev_prev_data :
         dict[str:
-    data: dict[str :
+    data : dict[str :
 
     Any] :
 
-    prev_data: dict[str :
+    prev_data : dict[str :
 
     Any] | None :
-         (Default value = None)
+        (Default value = None)
+    prev_prev_data : dict[str :
+
+    data: dict[str :
+
+    prev_data: dict[str :
+
     prev_prev_data: dict[str :
 
 
     Returns
     -------
+
 
     """
     try:
@@ -155,6 +158,20 @@ def detect_candlestick_pattern(
         None:  (Default value = None)
     prev_prev_data :
         dict[str:
+    open_price : float :
+
+    high_price : float :
+
+    low_price : float :
+
+    close_price : float :
+
+    prev_data : dict[str :
+
+    float] | None :
+        (Default value = None)
+    prev_prev_data : dict[str :
+
     open_price: float :
 
     high_price: float :
@@ -165,13 +182,12 @@ def detect_candlestick_pattern(
 
     prev_data: dict[str :
 
-    float] | None :
-         (Default value = None)
     prev_prev_data: dict[str :
 
 
     Returns
     -------
+
 
     """
     EPSILON = 1e-5
@@ -284,9 +300,15 @@ def detect_three_black_crows(
         param prev_data: dict[str:
     current_data :
         dict[str:
-    prev_prev_data: dict[str :
+    prev_prev_data : dict[str :
 
     float] :
+
+    prev_data : dict[str :
+
+    current_data : dict[str :
+
+    prev_prev_data: dict[str :
 
     prev_data: dict[str :
 
@@ -295,6 +317,7 @@ def detect_three_black_crows(
 
     Returns
     -------
+
 
     """
     try:

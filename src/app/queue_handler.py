@@ -31,11 +31,14 @@ def validate_data(payload: dict) -> bool:
         dict:
     payload :
         dict:
+    payload : dict :
+
     payload: dict :
 
 
     Returns
     -------
+
 
     """
     if "data" not in payload or not isinstance(payload["data"], dict):
@@ -101,11 +104,14 @@ def consume_rabbitmq() -> None:
             param body: bytes:
         body :
             bytes:
+        body : bytes :
+
         body: bytes :
 
 
         Returns
         -------
+
 
         """
         try:
