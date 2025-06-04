@@ -30,6 +30,7 @@ def validate_data(payload: dict) -> bool:
     :param payload: type payload: dict :
     :param payload: dict:
     :param payload: dict:
+    :param payload: dict:
     :param payload: dict: 
 
     """
@@ -92,6 +93,7 @@ def consume_rabbitmq() -> None:
         :param body: bytes:
         :param body: type body: bytes :
         :param body: type body: bytes :
+        :param body: bytes:
         :param body: bytes:
         :param body: bytes:
         :param body: bytes: 

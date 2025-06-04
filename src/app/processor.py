@@ -46,6 +46,10 @@ def analyze(
     :param Any: param prev_data: dict[str:
     :param Any: None:  (Default value = None)
     :param prev_prev_data: dict[str:
+    :param data: dict[str:
+    :param Any: param prev_data: dict[str:
+    :param Any: None:  (Default value = None)
+    :param prev_prev_data: dict[str:
     :param data: dict[str: 
     :param Any]: 
     :param prev_data: dict[str: 
@@ -138,6 +142,13 @@ def detect_candlestick_pattern(
     :param low_price: float:
     :param close_price: float:
     :param prev_data: dict[str:
+    :param prev_prev_data: dict[str:
+    :param open_price: float:
+    :param high_price: float:
+    :param low_price: float:
+    :param close_price: float:
+    :param prev_data: dict[str:
+    :param float: None:  (Default value = None)
     :param prev_prev_data: dict[str:
     :param open_price: float:
     :param high_price: float:
@@ -262,6 +273,9 @@ def detect_three_black_crows(
     :param current_data: type current_data: dict[str :
     :param prev_prev_data: dict[str:
     :param prev_data: dict[str:
+    :param current_data: dict[str:
+    :param prev_prev_data: dict[str:
+    :param float: param prev_data: dict[str:
     :param current_data: dict[str:
     :param prev_prev_data: dict[str:
     :param float: param prev_data: dict[str:
