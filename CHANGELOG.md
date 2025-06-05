@@ -5,6 +5,16 @@
 - Making sure Dockerfile is correct (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
 
+## v0.6.0 (2025-06-05)
+
+### Feat
+
+- **sync**: add full sync_if_needed.py script with logging and Makefile support
+
+### Fix
+
+- **files**: Address workflows timing out issues
+
 ## v0.5.3 (2025-06-03)
 
 ### Fix
