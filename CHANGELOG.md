@@ -1,3 +1,107 @@
+## v0.6.2 (2025-06-07)
+
+### Fix
+
+- **files**: verify pyproject.toml has all required fields
+
+## v0.6.1 (2025-06-06)
+
+### Fix
+
+- **deps**: recompile requirements to resolve dependency conflicts
+
+## v0.6.0 (2025-06-05)
+
+### Feat
+
+- **sync**: add full sync_if_needed.py script with logging and Makefile support
+
+### Fix
+
+- **files**: Address workflows timing out issues
+
+## v0.5.3 (2025-06-03)
+
+### Fix
+
+- **deps**: recompile requirements-dev.txt and resolve conflicts
+- **deps**: standardize termcolor to 2.5.0
+
+## v0.5.2 (2025-06-03)
+
+### Fix
+
+- **deps**: standardize termcolor to 2.5.0
+
+## v0.5.1 (2025-06-03)
+
+## v0.5.0 (2025-05-24)
+
+### Fix
+
+- **files**: Cleanup redundant files and standardize
+
+## v0.4.1 (2025-05-24)
+
+### Feat
+
+- **versioning**: enforce version consistency across pyproject.toml, __init__.py, and changelog
+
+## v0.4.0 (2025-05-23)
+
+### Fix
+
+- **poller**: integrate updates
+
+## v0.3.0 (2025-05-23)
+
+### Feat
+
+- **poller**: fix queue_sender to make sure it's standardized
+- **poller**: integrate updates
+
+## v0.2.5 (2025-05-08)
+
+### Feat
+
+- **poller**: standard todo across all pollers
+
+### Fix
+
+- **poller**: fix makefile to add more commands
+
+## v0.2.4 (2025-05-07)
+
+### Fix
+
+- **docs**: Running docformatter to fix repos
+
+## v0.2.3 (2025-05-07)
+
+### Fix
+
+- **test**: Disable pytest performance benchmark
+
+## v0.2.2 (2025-05-07)
+
+### Fix
+
+- **lint**: Fix pre-commit and disable pytest workflow
+
+## v0.2.1 (2025-05-06)
+
+### Fix
+
+- **docker**: Fix workflow not getting version
+- **docs**: Fix pyproject.toml to adjust version to dynamic = [version]
+
+## v0.2.0 (2025-05-06)
+
+### Feat
+
+- **docs**: Added automated releases
+- **docs**: Update changlog generation to commitzen
+
 ## v0.1.0 (2025-06-05)
 
 ### Fix
