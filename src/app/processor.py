@@ -65,11 +65,15 @@ def analyze(
         close_price = float(ohlc_data["close"])
     except (KeyError, TypeError, ValueError):
         logger.error("Invalid data format: %s", data)
-        return {"error": "Invalid data format. Expected 'data' with open, high, low, close."}
+        return {
+            "error": "Invalid data format. Expected 'data' with open, high, low, close."
+        }
 
     prev_data = prev_data.get("data") if prev_data and "data" in prev_data else None
     prev_prev_data = (
-        prev_prev_data.get("data") if prev_prev_data and "data" in prev_prev_data else None
+        prev_prev_data.get("data")
+        if prev_prev_data and "data" in prev_prev_data
+        else None
     )
 
     pattern = detect_candlestick_pattern(
@@ -193,11 +197,19 @@ def detect_candlestick_pattern(
             prev_open = prev_close = prev_high = prev_low = None
 
         if prev_open and prev_close:
-            if prev_close < prev_open and close_price > prev_close and open_price < prev_close:
+            if (
+                prev_close < prev_open
+                and close_price > prev_close
+                and open_price < prev_close
+            ):
                 logger.info("Pattern Matched: Piercing Pattern")
                 return "Piercing Pattern"
 
-            if prev_close > prev_open and close_price < prev_close and open_price > prev_close:
+            if (
+                prev_close > prev_open
+                and close_price < prev_close
+                and open_price > prev_close
+            ):
                 logger.info("Pattern Matched: Dark Cloud Cover")
                 return "Dark Cloud Cover"
 
