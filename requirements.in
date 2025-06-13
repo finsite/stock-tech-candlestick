@@ -16,3 +16,4 @@ python-dotenv>=1.0.0
 
 # Vault integration (if needed)
 hvac>=1.2.1,<2.0.0
+prometheus_client>=0.17.1
