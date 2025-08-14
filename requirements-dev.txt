@@ -46,7 +46,7 @@ bleach[css]==6.2.0
     # via
     #   -r requirements-dev.in
     #   nbconvert
-boltons==21.0.0
+boltons==25.0.0
     # via
     #   -r requirements-dev.in
     #   face
@@ -127,7 +127,7 @@ cyclonedx-bom==7.0.0
     #   cyclonedx-py
 cyclonedx-py==1.0.1
     # via -r requirements-dev.in
-cyclonedx-python-lib[validation]==9.1.0
+cyclonedx-python-lib[validation]==11.0.0
     # via
     #   -r requirements-dev.in
     #   cyclonedx-bom
@@ -194,7 +194,7 @@ ghp-import==2.1.0
     # via
     #   -r requirements-dev.in
     #   mkdocs
-glom==22.1.0
+glom==24.11.0
     # via -r requirements-dev.in
 googleapis-common-protos==1.70.0
     # via -r requirements-dev.in
@@ -221,7 +221,7 @@ iniconfig==2.1.0
     # via
     #   -r requirements-dev.in
     #   pytest
-ipython==8.12.3
+ipython==9.4.0
     # via
     #   -r requirements-dev.in
     #   pipreqs
@@ -281,7 +281,7 @@ license-expression==30.4.4
     # via
     #   -r requirements-dev.in
     #   cyclonedx-python-lib
-lxml==5.4.0
+lxml==6.0.0
     # via
     #   -r requirements-dev.in
     #   cyclonedx-python-lib
@@ -296,7 +296,7 @@ markdown==3.8.2
     #   mkdocs-autorefs
     #   mkdocstrings
     #   pymdown-extensions
-markdown-it-py==3.0.0
+markdown-it-py==4.0.0
     # via
     #   -r requirements-dev.in
     #   rich
@@ -406,7 +406,7 @@ pathspec==0.12.1
     #   -r requirements-dev.in
     #   black
     #   mkdocs
-pbr==6.1.1
+pbr==7.0.0
     # via
     #   -r requirements-dev.in
     #   stevedore
@@ -460,7 +460,7 @@ prompt-toolkit==3.0.51
     #   -r requirements-dev.in
     #   ipython
     #   questionary
-protobuf==4.25.8
+protobuf==6.32.0
     # via
     #   -r requirements-dev.in
     #   googleapis-common-protos
@@ -577,7 +577,7 @@ rfc3987==1.3.8
     # via
     #   -r requirements-dev.in
     #   jsonschema
-rich==13.5.3
+rich==14.1.0
     # via
     #   -r requirements-dev.in
     #   bandit
@@ -697,7 +697,7 @@ watchdog==6.0.0
     # via
     #   -r requirements-dev.in
     #   mkdocs
-wcmatch==8.5.2
+wcmatch==10.1
     # via -r requirements-dev.in
 wcwidth==0.2.13
     # via
