@@ -55,9 +55,9 @@ boolean-py==5.0
     # via
     #   -r requirements-dev.in
     #   license-expression
-boto3==1.40.6
+boto3==1.40.11
     # via -r requirements-dev.in
-botocore==1.40.6
+botocore==1.40.11
     # via
     #   -r requirements-dev.in
     #   boto3
@@ -91,7 +91,7 @@ charset-normalizer==3.4.3
     #   -r requirements-dev.in
     #   commitizen
     #   requests
-click==8.1.8
+click==8.2.1
     # via
     #   -r requirements-dev.in
     #   black
@@ -117,7 +117,7 @@ colorama==0.4.6
     #   pytest
 commitizen==4.8.3
     # via -r requirements-dev.in
-coverage[toml]==7.10.2
+coverage[toml]==7.10.3
     # via
     #   -r requirements-dev.in
     #   pytest-cov
@@ -165,7 +165,7 @@ docopt==0.6.2
     # via
     #   -r requirements-dev.in
     #   pipreqs
-exceptiongroup==1.2.2
+exceptiongroup==1.3.0
     # via -r requirements-dev.in
 executing==2.2.0
     # via
@@ -175,11 +175,11 @@ face==24.0.0
     # via
     #   -r requirements-dev.in
     #   glom
-fastjsonschema==2.21.1
+fastjsonschema==2.21.2
     # via
     #   -r requirements-dev.in
     #   nbformat
-filelock==3.18.0
+filelock==3.19.1
     # via
     #   -r requirements-dev.in
     #   cachecontrol
@@ -221,7 +221,7 @@ iniconfig==2.1.0
     # via
     #   -r requirements-dev.in
     #   pytest
-ipython==8.12.3
+ipython==8.37.0
     # via
     #   -r requirements-dev.in
     #   pipreqs
@@ -480,7 +480,7 @@ pydantic==2.11.7
     # via
     #   -r requirements-dev.in
     #   yamlfix
-pydantic-core==2.33.2
+pydantic-core==2.39.0
     # via
     #   -r requirements-dev.in
     #   pydantic
@@ -577,7 +577,7 @@ rfc3987==1.3.8
     # via
     #   -r requirements-dev.in
     #   jsonschema
-rich==13.5.3
+rich==13.9.4
     # via
     #   -r requirements-dev.in
     #   bandit
@@ -593,7 +593,7 @@ ruamel-yaml-clib==0.2.12
     # via
     #   -r requirements-dev.in
     #   ruamel-yaml
-ruff==0.12.8
+ruff==0.12.9
     # via -r requirements-dev.in
 ruyaml==0.91.0
     # via
@@ -616,7 +616,7 @@ soupsieve==2.7
     # via
     #   -r requirements-dev.in
     #   beautifulsoup4
-sqlalchemy==2.0.42
+sqlalchemy==2.0.43
     # via -r requirements-dev.in
 stack-data==0.6.3
     # via
@@ -641,7 +641,7 @@ toml==0.10.2
     #   -r requirements-dev.in
     #   maison
     #   pip-audit
-tomli==2.0.2
+tomli==2.2.1
     # via -r requirements-dev.in
 tomlkit==0.13.3
     # via
@@ -689,7 +689,7 @@ urllib3==2.5.0
     #   -r requirements-dev.in
     #   botocore
     #   requests
-virtualenv==20.33.1
+virtualenv==20.34.0
     # via
     #   -r requirements-dev.in
     #   pre-commit
@@ -716,13 +716,13 @@ wheel==0.45.1
     # via
     #   -r requirements-dev.in
     #   pip-tools
-wrapt==1.17.2
+wrapt==1.17.3
     # via
     #   -r requirements-dev.in
     #   deprecated
 yamlfix==1.17.0
     # via -r requirements-dev.in
-yarg==0.1.9
+yarg==0.1.10
     # via
     #   -r requirements-dev.in
     #   pipreqs
