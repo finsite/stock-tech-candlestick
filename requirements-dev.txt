@@ -179,7 +179,7 @@ fastjsonschema==2.21.1
     # via
     #   -r requirements-dev.in
     #   nbformat
-filelock==3.18.0
+filelock==3.20.3
     # via
     #   -r requirements-dev.in
     #   cachecontrol
