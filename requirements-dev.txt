@@ -357,7 +357,7 @@ nbclient==0.10.2
     # via
     #   -r requirements-dev.in
     #   nbconvert
-nbconvert==7.16.6
+nbconvert==7.17.1
     # via
     #   -r requirements-dev.in
     #   pipreqs
