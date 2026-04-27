@@ -712,7 +712,7 @@ webencodings==0.5.1
     #   -r requirements-dev.in
     #   bleach
     #   tinycss2
-wheel==0.45.1
+wheel==0.46.2
     # via
     #   -r requirements-dev.in
     #   pip-tools
