@@ -497,7 +497,7 @@ pygments==2.19.2
     #   rich
 pylint==3.3.8
     # via -r requirements-dev.in
-pymdown-extensions==10.16.1
+pymdown-extensions==10.21.3
     # via
     #   -r requirements-dev.in
     #   mkdocstrings
