@@ -558,7 +558,7 @@ referencing==0.36.2
     #   -r requirements-dev.in
     #   jsonschema
     #   jsonschema-specifications
-requests==2.32.4
+requests==2.33.0
     # via
     #   -r requirements-dev.in
     #   cachecontrol
