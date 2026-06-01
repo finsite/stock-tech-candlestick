@@ -460,7 +460,7 @@ prompt-toolkit==3.0.51
     #   -r requirements-dev.in
     #   ipython
     #   questionary
-protobuf==4.25.8
+protobuf==5.29.6
     # via
     #   -r requirements-dev.in
     #   googleapis-common-protos
